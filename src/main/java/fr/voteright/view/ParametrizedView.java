@@ -1,4 +1,4 @@
-package org.example.view;
+package fr.voteright.view;
 
 import java.util.Map;
 

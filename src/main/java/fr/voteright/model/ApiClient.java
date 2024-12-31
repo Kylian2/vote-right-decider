@@ -1,4 +1,4 @@
-package org.example.model;
+package fr.voteright.model;
 
 import java.net.HttpURLConnection;
 import java.net.URL;

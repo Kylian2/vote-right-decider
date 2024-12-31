@@ -1,9 +1,9 @@
-package org.example.controller;
+package fr.voteright.controller;
 
-import org.example.view.CommunityView;
-import org.example.view.LoginView;
-import org.example.view.CommuntiesView;
-import org.example.view.ParametrizedView;
+import fr.voteright.view.CommunityView;
+import fr.voteright.view.LoginView;
+import fr.voteright.view.CommuntiesView;
+import fr.voteright.view.ParametrizedView;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,6 +1,6 @@
-package org.example;
+package fr.voteright;
 
-import org.example.controller.NavigationManager;
+import fr.voteright.controller.NavigationManager;
 
 import javax.swing.*;
 import java.awt.*;

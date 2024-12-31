@@ -1,9 +1,8 @@
-package org.example.view;
+package fr.voteright.view;
 
-import org.example.controller.NavigationManager;
+import fr.voteright.controller.NavigationManager;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class LoginView extends JPanel {
