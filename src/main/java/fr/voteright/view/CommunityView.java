@@ -74,7 +74,7 @@ public class CommunityView extends View implements ParametrizedView{
         for (Proposal p : proposals) {
             JPanel proposalPanel = new JPanel(new BorderLayout());
             proposalPanel.setBackground(Color.lightGray);
-            proposalPanel.setPreferredSize(new Dimension(1200, 50));
+            proposalPanel.setMaximumSize(new Dimension(1200, 50));
             JLabel proposalTitle = new JLabel(p.getTitle());
             proposalPanel.setBorder(BorderFactory.createEmptyBorder(6, 10, 0, 0));
             proposalPanel.setFont(new Font("Arial", Font.PLAIN, 20));

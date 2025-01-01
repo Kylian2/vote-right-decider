@@ -45,7 +45,7 @@ public class CommunitiesView extends View{
         for (Community cmy : communities) {
             JPanel community = new JPanel(new BorderLayout());
             community.setBackground(Color.LIGHT_GRAY);
-            community.setPreferredSize(new Dimension(1200, 50));
+            community.setMaximumSize(new Dimension(1200, 50));
             JLabel communityName = new JLabel(cmy.getName());
             communityName.setBorder(BorderFactory.createEmptyBorder(6, 10, 0, 0));
             communityName.setFont(new Font("Arial", Font.PLAIN, 20));
