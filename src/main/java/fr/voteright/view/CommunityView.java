@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
 
-public class CommunityView extends JPanel implements ParametrizedView{
+public class CommunityView extends View implements ParametrizedView{
 
     private int id;
     private NavigationManager navigationManager;

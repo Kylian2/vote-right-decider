@@ -1,15 +1,28 @@
 package fr.voteright.view;
 
+import fr.voteright.controller.CommunitiesController;
 import fr.voteright.controller.NavigationManager;
+import fr.voteright.model.Community;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
-public class CommuntiesView extends JPanel{
-    public CommuntiesView(NavigationManager navigationManager) {
+public class CommunitiesView extends View{
+
+    private NavigationManager navigationManager;
+    private CommunitiesController controller;
+
+    public CommunitiesView(NavigationManager navigationManager, CommunitiesController controller) {
+        this.navigationManager = navigationManager;
+        this.controller = controller;
+    }
+
+    public void display(){
         setLayout(new BorderLayout());
 
         add(new Header(), BorderLayout.NORTH);
@@ -24,23 +37,23 @@ public class CommuntiesView extends JPanel{
         title.setBorder(BorderFactory.createEmptyBorder(40, 20, 30, 0));
         main.add(title, BorderLayout.NORTH);
 
-        int n = 10;
+        ArrayList<Community> communities = controller.getCommunties();
 
         JPanel communitiesPanel = new JPanel();
         communitiesPanel.setBackground(Color.WHITE);
         communitiesPanel.setLayout(new BoxLayout(communitiesPanel, BoxLayout.Y_AXIS));
 
-        for (int i = 0; i < n; i++) {
+        for (Community cmy : communities) {
             JPanel community = new JPanel(new BorderLayout());
             community.setBackground(Color.LIGHT_GRAY);
             community.setPreferredSize(new Dimension(1200, 50));
-            JLabel communityName = new JLabel("Groupe " + i);
+            JLabel communityName = new JLabel(cmy.getName());
             communityName.setBorder(BorderFactory.createEmptyBorder(6, 10, 0, 0));
             communityName.setFont(new Font("Arial", Font.PLAIN, 20));
             community.add(communityName, BorderLayout.WEST);
             communitiesPanel.add(community);
             communitiesPanel.add(Box.createVerticalStrut(10));
-            int finalI = i;
+            int finalI = cmy.getId();
             community.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {

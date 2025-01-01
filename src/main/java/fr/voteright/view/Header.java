@@ -36,7 +36,7 @@ public class Header extends JPanel {
 
         if(isLoggedIn) {
             JButton home = new JButton("Accueil");
-            home.addActionListener(e -> navigationManager.showView("page1"));
+            home.addActionListener(e -> navigationManager.showView("communities"));
             add(home, BorderLayout.EAST);
         }
     }

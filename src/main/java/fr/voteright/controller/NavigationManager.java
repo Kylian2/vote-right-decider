@@ -1,9 +1,6 @@
 package fr.voteright.controller;
 
-import fr.voteright.view.CommunityView;
-import fr.voteright.view.LoginView;
-import fr.voteright.view.CommuntiesView;
-import fr.voteright.view.ParametrizedView;
+import fr.voteright.view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,8 +20,8 @@ public class NavigationManager {
 
     public void start(JFrame frame) {
         // Initialisation des vues
-        addView("login", new LoginView(this));
-        addView("page1", new CommuntiesView(this));
+        addView("login", new LoginView(this, new LoginController()));
+        addView("communities", new CommunitiesView(this, new CommunitiesController()));
         addView("community", new CommunityView(this));
 
         // Ajout du panel contenant toutes les vues au frame
@@ -45,7 +42,9 @@ public class NavigationManager {
 
     public void showView(String name) {
         // Passe d'une vue à l'autre
-        if (views.containsKey(name)) {
+        View view = (View) views.get(name);
+        if (view != null) {
+            view.display();
             cardLayout.show(containerPanel, name);
         } else {
             System.err.println("Erreur : vue inexistante - " + name);

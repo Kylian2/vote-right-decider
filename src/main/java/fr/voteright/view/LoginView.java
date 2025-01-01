@@ -1,12 +1,25 @@
 package fr.voteright.view;
 
+import fr.voteright.controller.LoginController;
 import fr.voteright.controller.NavigationManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
 
-public class LoginView extends JPanel {
-    public LoginView(NavigationManager navigationManager) {
+public class LoginView extends View {
+
+    private NavigationManager navigationManager;
+    private LoginController controller;
+
+    public LoginView(NavigationManager navigationManager, LoginController controller) {
+        this.navigationManager = navigationManager;
+        this.controller = controller;
+    }
+
+    public void display() {
         setLayout(new BorderLayout());
         setBackground(Color.white);
 
@@ -69,7 +82,16 @@ public class LoginView extends JPanel {
 
         add(main, BorderLayout.CENTER);
 
-        loginButton.addActionListener(e -> navigationManager.showView("page1"));
-
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                boolean validCredentials = controller.login(emailField.getText(), new String(passwordField.getPassword()));
+                if(validCredentials) {
+                   navigationManager.showView("communities");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Email ou mot de passe incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
     }
 }
