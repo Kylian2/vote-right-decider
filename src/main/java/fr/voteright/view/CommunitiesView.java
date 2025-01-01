@@ -1,28 +1,29 @@
 package fr.voteright.view;
 
-import fr.voteright.controller.CommunitiesController;
+import fr.voteright.controller.CommunityController;
 import fr.voteright.controller.NavigationManager;
 import fr.voteright.model.Community;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class CommunitiesView extends View{
 
     private NavigationManager navigationManager;
-    private CommunitiesController controller;
 
-    public CommunitiesView(NavigationManager navigationManager, CommunitiesController controller) {
+    public CommunitiesView(NavigationManager navigationManager) {
         this.navigationManager = navigationManager;
-        this.controller = controller;
     }
 
     public void display(){
+        CommunityController controller = new CommunityController();
+        ArrayList<Community> communities = controller.getCommunities();
+
         setLayout(new BorderLayout());
 
         add(new Header(), BorderLayout.NORTH);
@@ -36,8 +37,6 @@ public class CommunitiesView extends View{
         title.setFont(new Font("Arial", Font.BOLD, 30));
         title.setBorder(BorderFactory.createEmptyBorder(40, 20, 30, 0));
         main.add(title, BorderLayout.NORTH);
-
-        ArrayList<Community> communities = controller.getCommunties();
 
         JPanel communitiesPanel = new JPanel();
         communitiesPanel.setBackground(Color.WHITE);
@@ -54,35 +53,14 @@ public class CommunitiesView extends View{
             communitiesPanel.add(community);
             communitiesPanel.add(Box.createVerticalStrut(10));
             int finalI = cmy.getId();
-            community.addMouseListener(new MouseListener() {
+            community.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     HashMap<String, Object> params = new HashMap<>();
                     params.put("community", finalI);
                     navigationManager.showView("community", params);
                 }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-
-                }
             });
-
         }
 
         JScrollPane scrollPane = new JScrollPane(communitiesPanel);

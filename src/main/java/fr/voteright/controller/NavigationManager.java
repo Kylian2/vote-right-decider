@@ -21,7 +21,7 @@ public class NavigationManager {
     public void start(JFrame frame) {
         // Initialisation des vues
         addView("login", new LoginView(this, new LoginController()));
-        addView("communities", new CommunitiesView(this, new CommunitiesController()));
+        addView("communities", new CommunitiesView(this));
         addView("community", new CommunityView(this));
 
         // Ajout du panel contenant toutes les vues au frame
