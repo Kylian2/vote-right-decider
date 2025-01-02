@@ -1,0 +1,39 @@
+{
+  "CMY_id_NB": 0,
+  "CMY_nb_member_NB": 20,
+  "CMY_budget_NB": 400000,
+  "CMY_used_budget_NB": 0,
+  "CMY_fixed_fees_NB": 120000,
+  "CMY_budget_theme_NB": [
+    {
+      "THM_id_NB": 1,
+      "THM_name_VC": "Thème 1",
+      "BUT_amount_NB": 8456,
+      "BUT_used_budget_NB": 0
+    },
+    {
+      "THM_id_NB": 2,
+      "THM_name_VC": "Thème 2",
+      "BUT_amount_NB": 20935,
+      "BUT_used_budget_NB": 0
+    },
+    {
+      "THM_id_NB": 3,
+      "THM_name_VC": "Thème 3",
+      "BUT_amount_NB": 37610,
+      "BUT_used_budget_NB": 0
+    },
+    {
+      "THM_id_NB": 4,
+      "THM_name_VC": "Thème 4",
+      "BUT_amount_NB": 22494,
+      "BUT_used_budget_NB": 0
+    },
+    {
+      "THM_id_NB": 5,
+      "THM_name_VC": "Thème 5",
+      "BUT_amount_NB": 55251,
+      "BUT_used_budget_NB": 0
+    }
+  ]
+}

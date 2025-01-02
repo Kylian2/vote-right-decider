@@ -1,0 +1,572 @@
+[
+  {
+    "PRO_id_NB": 1,
+    "PRO_title_VC": "Proposition 1",
+    "PRO_budget_NB": 2240,
+    "PRO_theme_NB": 1,
+    "vote": {
+      "system": 4,
+      "positive": [],
+      "negative": []
+    },
+    "reaction": {
+      "like": [
+        14,
+        16,
+        10,
+        13,
+        4,
+        1,
+        17,
+        19,
+        5,
+        3
+      ],
+      "dislike": [
+        7,
+        11,
+        2,
+        15,
+        12,
+        6
+      ]
+    }
+  },
+  {
+    "PRO_id_NB": 2,
+    "PRO_title_VC": "Proposition 2",
+    "PRO_budget_NB": 14761,
+    "PRO_theme_NB": 3,
+    "vote": {
+      "system": 4,
+      "positive": [],
+      "negative": []
+    },
+    "reaction": {
+      "like": [
+        1,
+        14,
+        9,
+        8,
+        2,
+        11,
+        16,
+        13,
+        5,
+        15,
+        12
+      ],
+      "dislike": [
+        18
+      ]
+    }
+  },
+  {
+    "PRO_id_NB": 3,
+    "PRO_title_VC": "Proposition 3",
+    "PRO_budget_NB": 28835,
+    "PRO_theme_NB": 4,
+    "vote": {
+      "system": 1,
+      "positive": [
+        6,
+        4,
+        8,
+        15,
+        9,
+        12,
+        7,
+        1,
+        2,
+        11,
+        13,
+        3,
+        14,
+        10,
+        5
+      ],
+      "negative": []
+    },
+    "reaction": {
+      "like": [
+        13,
+        1,
+        8,
+        17,
+        18
+      ],
+      "dislike": [
+        3,
+        6,
+        10,
+        11,
+        9,
+        15,
+        20,
+        16
+      ]
+    }
+  },
+  {
+    "PRO_id_NB": 4,
+    "PRO_title_VC": "Proposition 4",
+    "PRO_budget_NB": 19982,
+    "PRO_theme_NB": 4,
+    "vote": {
+      "system": 1,
+      "positive": [
+        13,
+        7,
+        9,
+        1,
+        3,
+        10,
+        12,
+        2,
+        4,
+        15
+      ],
+      "negative": [
+        8,
+        6,
+        14,
+        5
+      ]
+    },
+    "reaction": {
+      "like": [
+        4,
+        15,
+        9,
+        7,
+        12,
+        10,
+        8,
+        18,
+        11,
+        20,
+        19,
+        6,
+        5,
+        13
+      ],
+      "dislike": []
+    }
+  },
+  {
+    "PRO_id_NB": 5,
+    "PRO_title_VC": "Proposition 5",
+    "PRO_budget_NB": 28846,
+    "PRO_theme_NB": 3,
+    "vote": {
+      "system": 4,
+      "positive": [],
+      "negative": []
+    },
+    "reaction": {
+      "like": [
+        10,
+        19
+      ],
+      "dislike": [
+        20,
+        5,
+        13,
+        8
+      ]
+    }
+  },
+  {
+    "PRO_id_NB": 6,
+    "PRO_title_VC": "Proposition 6",
+    "PRO_budget_NB": 35535,
+    "PRO_theme_NB": 3,
+    "vote": {
+      "system": 3,
+      "positive": [],
+      "negative": []
+    },
+    "reaction": {
+      "like": [
+        6,
+        2,
+        11,
+        7,
+        16
+      ],
+      "dislike": [
+        13,
+        20,
+        14,
+        4,
+        1
+      ]
+    }
+  },
+  {
+    "PRO_id_NB": 7,
+    "PRO_title_VC": "Proposition 7",
+    "PRO_budget_NB": 9377,
+    "PRO_theme_NB": 2,
+    "vote": {
+      "system": 2,
+      "positive": [
+        9,
+        4,
+        12,
+        1,
+        2,
+        15,
+        5,
+        13
+      ],
+      "negative": [
+        8,
+        6,
+        14
+      ]
+    },
+    "reaction": {
+      "like": [
+        6,
+        17,
+        4,
+        20,
+        8
+      ],
+      "dislike": [
+        16,
+        18,
+        2,
+        12,
+        3,
+        15,
+        5
+      ]
+    }
+  },
+  {
+    "PRO_id_NB": 8,
+    "PRO_title_VC": "Proposition 8",
+    "PRO_budget_NB": 32847,
+    "PRO_theme_NB": 3,
+    "vote": {
+      "system": 2,
+      "positive": [
+        14,
+        10,
+        15,
+        6,
+        9,
+        7,
+        8,
+        2,
+        11
+      ],
+      "negative": [
+        1
+      ]
+    },
+    "reaction": {
+      "like": [
+        14
+      ],
+      "dislike": [
+        1,
+        9,
+        19,
+        20,
+        2,
+        3,
+        11,
+        12,
+        4,
+        13,
+        5,
+        15,
+        16,
+        18,
+        6,
+        8
+      ]
+    }
+  },
+  {
+    "PRO_id_NB": 9,
+    "PRO_title_VC": "Proposition 9",
+    "PRO_budget_NB": 19528,
+    "PRO_theme_NB": 2,
+    "vote": {
+      "system": 1,
+      "positive": [
+        15
+      ],
+      "negative": [
+        2,
+        12,
+        5
+      ]
+    },
+    "reaction": {
+      "like": [
+        11,
+        3,
+        16,
+        1,
+        18,
+        17,
+        5,
+        19,
+        20,
+        13,
+        9,
+        4,
+        12,
+        8,
+        10,
+        2,
+        15
+      ],
+      "dislike": []
+    }
+  },
+  {
+    "PRO_id_NB": 10,
+    "PRO_title_VC": "Proposition 10",
+    "PRO_budget_NB": 5605,
+    "PRO_theme_NB": 1,
+    "vote": {
+      "system": 1,
+      "positive": [
+        1,
+        11,
+        8,
+        4,
+        3,
+        9
+      ],
+      "negative": [
+        14,
+        6,
+        15,
+        10,
+        13,
+        7,
+        2
+      ]
+    },
+    "reaction": {
+      "like": [
+        3,
+        20,
+        2,
+        10,
+        7,
+        13,
+        8,
+        5,
+        11
+      ],
+      "dislike": [
+        12,
+        14,
+        9,
+        16,
+        19
+      ]
+    }
+  },
+  {
+    "PRO_id_NB": 11,
+    "PRO_title_VC": "Proposition 11",
+    "PRO_budget_NB": 6430,
+    "PRO_theme_NB": 1,
+    "vote": {
+      "system": 4,
+      "positive": [],
+      "negative": []
+    },
+    "reaction": {
+      "like": [
+        19,
+        5,
+        1,
+        20,
+        18,
+        12,
+        2,
+        15,
+        6,
+        7,
+        3,
+        17,
+        8,
+        11
+      ],
+      "dislike": [
+        10,
+        13,
+        4,
+        16,
+        9
+      ]
+    }
+  },
+  {
+    "PRO_id_NB": 12,
+    "PRO_title_VC": "Proposition 12",
+    "PRO_budget_NB": 32218,
+    "PRO_theme_NB": 4,
+    "vote": {
+      "system": 3,
+      "positive": [],
+      "negative": []
+    },
+    "reaction": {
+      "like": [
+        19,
+        6,
+        9
+      ],
+      "dislike": [
+        10,
+        2,
+        4,
+        8,
+        20,
+        12,
+        1,
+        16,
+        3,
+        11,
+        5,
+        13,
+        17,
+        14
+      ]
+    }
+  },
+  {
+    "PRO_id_NB": 13,
+    "PRO_title_VC": "Proposition 13",
+    "PRO_budget_NB": 11218,
+    "PRO_theme_NB": 3,
+    "vote": {
+      "system": 2,
+      "positive": [
+        7
+      ],
+      "negative": [
+        5,
+        2,
+        3
+      ]
+    },
+    "reaction": {
+      "like": [
+        5,
+        1,
+        12,
+        7,
+        14,
+        18,
+        13
+      ],
+      "dislike": [
+        20,
+        17,
+        11,
+        3,
+        10,
+        6,
+        19
+      ]
+    }
+  },
+  {
+    "PRO_id_NB": 14,
+    "PRO_title_VC": "Proposition 14",
+    "PRO_budget_NB": 15068,
+    "PRO_theme_NB": 2,
+    "vote": {
+      "system": 3,
+      "positive": [],
+      "negative": []
+    },
+    "reaction": {
+      "like": [
+        5,
+        2,
+        15,
+        13,
+        7,
+        11,
+        8,
+        14,
+        6,
+        20,
+        16,
+        4,
+        19,
+        9,
+        10,
+        12,
+        1,
+        18,
+        17
+      ],
+      "dislike": []
+    }
+  },
+  {
+    "PRO_id_NB": 15,
+    "PRO_title_VC": "Proposition 15",
+    "PRO_budget_NB": 5930,
+    "PRO_theme_NB": 1,
+    "vote": {
+      "system": 1,
+      "positive": [
+        12,
+        14,
+        8,
+        13,
+        3,
+        1,
+        10
+      ],
+      "negative": [
+        11,
+        6,
+        5,
+        15,
+        7
+      ]
+    },
+    "reaction": {
+      "like": [
+        13,
+        6,
+        16,
+        3,
+        20,
+        17
+      ],
+      "dislike": [
+        4,
+        9,
+        2,
+        7,
+        11,
+        5,
+        12,
+        10,
+        8,
+        18,
+        19,
+        1,
+        15,
+        14
+      ]
+    }
+  }
+]
