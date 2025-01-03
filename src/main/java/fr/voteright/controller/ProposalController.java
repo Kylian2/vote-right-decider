@@ -29,6 +29,7 @@ public class ProposalController {
         BruteForce bruteForce = new BruteForce();
         return switch (criteria) {
             case 1 -> greedy.maximizeTotalSatisfaction(proposals, community).toArrayList();
+            case 2 -> greedy.maximizeTotalSatisfactionRatio(proposals, community).toArrayList();
             case 3 -> bruteForce.maximizeTotalSatisfaction(proposals, community).toArrayList();
             default -> proposals;
         };

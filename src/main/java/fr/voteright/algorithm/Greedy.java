@@ -36,11 +36,11 @@ public class Greedy {
 
         Greedy greedy = new Greedy();
 
-        List<Proposal> maximiseTotalSatisfaction = greedy.maximizeTotalSatisfaction(proposals, community);
-        if(greedy.totalSatisfaction(maximiseTotalSatisfaction.toArrayList(), community) == 64){
+        List<Proposal> p = greedy.maximizeTotalSatisfaction(proposals, community);
+        if(totalSatisfaction(p.toArrayList()) == 64){
             System.out.println("OK -- GREEDY MAXIMISE TOTAL SATISFACTION -- TEST PASSED");
         }else{
-            System.out.println("ERROR -- GREEDY MAXIMISE TOTAL SATISFACTION -- TEST FAILED 64 EXPECTED, OBTAINED " + greedy.totalSatisfaction(maximiseTotalSatisfaction.toArrayList(), community));
+            System.out.println("ERROR -- GREEDY MAXIMISE TOTAL SATISFACTION -- TEST FAILED 64 EXPECTED, OBTAINED " + totalSatisfaction(p.toArrayList()));
         }
 
         try{
@@ -57,11 +57,39 @@ public class Greedy {
             System.out.println("OK -- GREEDY MAXIMISE TOTAL SATISFACTION -- TEST PASSED");
         }
 
-        maximiseTotalSatisfaction = greedy.maximizeTotalSatisfaction(proposals, communityWithoutBudget);
-        if(greedy.totalSatisfaction(maximiseTotalSatisfaction.toArrayList(), community) == 0){
+        p = greedy.maximizeTotalSatisfaction(proposals, communityWithoutBudget);
+        if(totalSatisfaction(p.toArrayList()) == 0){
             System.out.println("OK -- GREEDY MAXIMISE TOTAL SATISFACTION -- TEST PASSED");
         }else{
-            System.out.println("ERROR -- GREEDY MAXIMISE TOTAL SATISFACTION -- TEST FAILED 0 EXPECTED, OBTAINED " + greedy.totalSatisfaction(maximiseTotalSatisfaction.toArrayList(), community));
+            System.out.println("ERROR -- GREEDY MAXIMISE TOTAL SATISFACTION -- TEST FAILED 0 EXPECTED, OBTAINED " + totalSatisfaction(p.toArrayList()));
+        }
+
+        p = greedy.maximizeTotalSatisfactionRatio(proposals, community);
+        if(totalSatisfaction(p.toArrayList()) == 70){
+            System.out.println("OK -- GREEDY MAXIMISE TOTAL SATISFACTION RATIO -- TEST PASSED");
+        }else{
+            System.out.println("ERROR -- GREEDY MAXIMISE TOTAL SATISFACTION RATIO -- TEST FAILED 70 EXPECTED, OBTAINED " + totalSatisfaction(p.toArrayList()));
+        }
+
+        try{
+            greedy.maximizeTotalSatisfactionRatio(new ArrayList<>(), community);
+            System.out.println("ERROR -- GREEDY MAXIMISE TOTAL SATISFACTION RATIO -- EXCEPTION EXPECTED BECAUSE OF EMPTY LIST");
+        }catch (Exception e){
+            System.out.println("OK -- GREEDY MAXIMISE TOTAL SATISFACTION RATIO -- TEST PASSED");
+        }
+
+        try{
+            greedy.maximizeTotalSatisfactionRatio(new ArrayList<>(), null);
+            System.out.println("ERROR -- GREEDY MAXIMISE TOTAL SATISFACTION RATIO -- EXCEPTION EXPECTED BECAUSE OF INVALID COMMUNITY");
+        }catch (Exception e){
+            System.out.println("OK -- GREEDY MAXIMISE TOTAL SATISFACTION RATIO -- TEST PASSED");
+        }
+
+        p = greedy.maximizeTotalSatisfactionRatio(proposals, communityWithoutBudget);
+        if(totalSatisfaction(p.toArrayList()) == 0){
+            System.out.println("OK -- GREEDY MAXIMISE TOTAL SATISFACTION RATIO -- TEST PASSED");
+        }else{
+            System.out.println("ERROR -- GREEDY MAXIMISE TOTAL SATISFACTION RATIO -- TEST FAILED 0 EXPECTED, OBTAINED " + totalSatisfaction(p.toArrayList()));
         }
 
     }
@@ -83,12 +111,14 @@ public class Greedy {
         if(community == null || community.getThemes() == null || community.getThemes().isEmpty()){
             throw new Exception("La communauté est null ou contient un element invalide");
         }
+        Community cmy = new Community(community); //pour ne pas modifier la liste en paramètre
+
 
         //Création d'une liste de proposition respectant les contraintes budgétaires
         ArrayList<Proposal> validProposals = new ArrayList<Proposal>();
         for (Proposal proposal : proposals) {
             int themeIndex = proposal.getTheme() - 1;
-            int availableBudget = community.getThemes().get(themeIndex).getBudget() - community.getThemes().get(themeIndex).getUsedBudget();
+            int availableBudget = cmy.getThemes().get(themeIndex).getBudget() - cmy.getThemes().get(themeIndex).getUsedBudget();
             if (proposal.getBudget() <= availableBudget) {
                 validProposals.add(proposal);
             }
@@ -111,16 +141,71 @@ public class Greedy {
         }
 
         selectedProposals.setData(validProposals.get(best));
-        community.getThemes().get(validProposals.get(best).getTheme()-1).useBudget(validProposals.get(best).getBudget());
+        cmy.getThemes().get(validProposals.get(best).getTheme()-1).useBudget(validProposals.get(best).getBudget());
         validProposals.remove(best);
         if(!validProposals.isEmpty()){
-            selectedProposals.setTail(maximizeTotalSatisfaction(validProposals, community));
+            selectedProposals.setTail(maximizeTotalSatisfaction(validProposals, cmy));
         }
 
         return selectedProposals;
     }
 
-    public int totalSatisfaction(ArrayList<Proposal> proposals, Community community){
+    /**
+     * Sélectionne une liste optimale de propositions afin de maximiser la satisfaction globale
+     * en respectant les contraintes budgétaires de chaque thème de la communauté.
+     * Cette méthode utilise un ratio budget/satisfaction pour prioriser les propositions.
+     *
+     * @param proposals La liste des propositions à examiner.
+     * @param community La communauté contenant les thèmes et budgets associés.
+     * @return Une liste chaînée de propositions optimisées pour maximiser la satisfaction globale.
+     * @throws Exception Si la liste des propositions est vide ou si la communauté est invalide.
+     */
+    public List<Proposal> maximizeTotalSatisfactionRatio(ArrayList<Proposal> proposals, Community community) throws Exception {
+        if(proposals.isEmpty()){
+            throw new Exception("Une liste de proposition non vide est attendue");
+        }
+        if(community == null || community.getThemes() == null || community.getThemes().isEmpty()){
+            throw new Exception("La communauté est null ou contient un element invalide");
+        }
+        Community cmy = new Community(community); //pour ne pas modifier la liste en paramètre
+
+        //Création d'une liste de proposition respectant les contraintes budgétaires
+        ArrayList<Proposal> validProposals = new ArrayList<Proposal>();
+        for (Proposal proposal : proposals) {
+            int themeIndex = proposal.getTheme() - 1;
+            int availableBudget = cmy.getThemes().get(themeIndex).getBudget() - cmy.getThemes().get(themeIndex).getUsedBudget();
+            if (proposal.getBudget() <= availableBudget) {
+                validProposals.add(proposal);
+            }
+        }
+        if (validProposals.isEmpty()) {
+            return new List<>(null);
+        }
+
+        //Selection de la meilleur proposition
+        List<Proposal> selectedProposals = new List<>(null);
+        int best = 0;
+        double satisfactionBestRatio = validProposals.getFirst().getBudget() / (double) validProposals.getFirst().satisfiedUser();
+
+        for (int i = 1; i < validProposals.size(); i++) {
+            double ratio = validProposals.get(i).getBudget() / (double) validProposals.get(i).satisfiedUser();
+            if(ratio < satisfactionBestRatio){
+                satisfactionBestRatio = ratio;
+                best = i;
+            }
+        }
+
+        selectedProposals.setData(validProposals.get(best));
+        cmy.getThemes().get(validProposals.get(best).getTheme()-1).useBudget(validProposals.get(best).getBudget());
+        validProposals.remove(best);
+        if(!validProposals.isEmpty()){
+            selectedProposals.setTail(maximizeTotalSatisfaction(validProposals, cmy));
+        }
+
+        return selectedProposals;
+    }
+
+    public static int totalSatisfaction(ArrayList<Proposal> proposals){
         int totalSatisfaction = 0;
         for(Proposal p : proposals){
             totalSatisfaction += p.satisfiedUser();

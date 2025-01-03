@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import fr.voteright.model.Community;
 import fr.voteright.model.Proposal;
 import fr.voteright.utils.List;
-
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,13 +35,11 @@ public class BruteForce {
 
         BruteForce bruteForce = new BruteForce();
 
-        Greedy greedy = new Greedy();
-
         List<Proposal> maximiseTotalSatisfaction = bruteForce.maximizeTotalSatisfaction(proposals, community);
-        if(greedy.totalSatisfaction(maximiseTotalSatisfaction.toArrayList(), community) == 70){
+        if(Greedy.totalSatisfaction(maximiseTotalSatisfaction.toArrayList()) == 70){
             System.out.println("OK -- BRUTE FORCE MAXIMISE TOTAL SATISFACTION -- TEST PASSED");
         }else{
-            System.out.println("ERROR -- BRUTE FORCE MAXIMISE TOTAL SATISFACTION -- TEST FAILED 64 EXPECTED, OBTAINED " + greedy.totalSatisfaction(maximiseTotalSatisfaction.toArrayList(), community));
+            System.out.println("ERROR -- BRUTE FORCE MAXIMISE TOTAL SATISFACTION -- TEST FAILED 70 EXPECTED, OBTAINED " + totalSatisfaction(maximiseTotalSatisfaction.toArrayList()));
         }
 
         try{
@@ -59,11 +56,11 @@ public class BruteForce {
             System.out.println("OK -- BRUTE FORCE MAXIMISE TOTAL SATISFACTION -- TEST PASSED");
         }
 
-        maximiseTotalSatisfaction = greedy.maximizeTotalSatisfaction(proposals, communityWithoutBudget);
-        if(greedy.totalSatisfaction(maximiseTotalSatisfaction.toArrayList(), community) == 0){
-            System.out.println("OK -- GREEDY MAXIMISE TOTAL SATISFACTION -- TEST PASSED");
+        maximiseTotalSatisfaction = bruteForce.maximizeTotalSatisfaction(proposals, communityWithoutBudget);
+        if(Greedy.totalSatisfaction(maximiseTotalSatisfaction.toArrayList()) == 0){
+            System.out.println("OK -- BRUTE FORCE MAXIMISE TOTAL SATISFACTION -- TEST PASSED");
         }else{
-            System.out.println("ERROR -- GREEDY MAXIMISE TOTAL SATISFACTION -- TEST FAILED 0 EXPECTED, OBTAINED " + greedy.totalSatisfaction(maximiseTotalSatisfaction.toArrayList(), community));
+            System.out.println("ERROR -- BRUTE FORCE MAXIMISE TOTAL SATISFACTION -- TEST FAILED 0 EXPECTED, OBTAINED " + totalSatisfaction(maximiseTotalSatisfaction.toArrayList()));
         }
     }
 
@@ -158,7 +155,7 @@ public class BruteForce {
             List<Proposal> currentSolution = new List<>(currentProposal);
             currentSolution.setTail(maximizeTotalSatisfactionWithMemoization(remainingProposals, newCommunity, cache));
 
-            int currentSatisfaction = totalSatisfaction(currentSolution.toArrayList(), newCommunity);
+            int currentSatisfaction = totalSatisfaction(currentSolution.toArrayList());
 
             if (currentSatisfaction > bestSatisfaction) {
                 bestSatisfaction = currentSatisfaction;
@@ -192,7 +189,7 @@ public class BruteForce {
     }
 
 
-    public int totalSatisfaction(ArrayList<Proposal> proposals, Community community){
+    public static int totalSatisfaction(ArrayList<Proposal> proposals){
         int totalSatisfaction = 0;
         for(Proposal p : proposals){
             totalSatisfaction += p.satisfiedUser();

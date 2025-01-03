@@ -75,7 +75,8 @@ public class CommunityView extends View implements ParametrizedView{
         Map<String, Integer> options = new LinkedHashMap<>();
         options.put("Tout", 0);
         options.put("Rapide - Maximiser la satisfaction", 1);
-        options.put("Lent - Maximiser la satisfaction", 3);
+        options.put("Rapide - Maximiser la satisfaction (ratio)", 1);
+        options.put("Optimal - Maximiser la satisfaction", 3);
 
         Set<String> keys = options.keySet();
         String[] optionsArray = keys.toArray(new String[0]);
