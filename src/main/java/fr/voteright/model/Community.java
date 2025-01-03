@@ -141,4 +141,19 @@ public class Community {
     public ArrayList<Theme> getThemes() {
         return themes;
     }
+
+    public void setThemes(ArrayList<Theme> themes) {
+        this.themes = new ArrayList<>();
+        for(Theme theme : themes){
+            this.themes.add(new Theme(theme));
+        }
+    }
+
+    public void setUsedBudget(int usedBudget) {
+        this.usedBudget = usedBudget;
+    }
+
+    public void setBudget(int budget) {
+        this.budget = budget;
+    }
 }

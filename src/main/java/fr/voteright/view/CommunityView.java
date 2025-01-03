@@ -25,6 +25,7 @@ public class CommunityView extends View implements ParametrizedView{
         CommunityController communityController = new CommunityController();
         ProposalController proposalController = new ProposalController();
         Community community = communityController.getCommunity(id);
+        communityController.getBudget(community);
         ArrayList<Proposal> proposals = proposalController.getProposalsOf(id);
 
         setLayout(new BorderLayout());
@@ -43,7 +44,8 @@ public class CommunityView extends View implements ParametrizedView{
         totalBudgetPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 0, 0));
         totalBudgetPanel.setLayout(new BoxLayout(totalBudgetPanel, BoxLayout.Y_AXIS));
         JLabel totalBudgetLabel = new JLabel("Budget Total :");
-        JLabel totalBudget = new JLabel(" - - - "+"€");
+        JLabel totalBudget = new JLabel(community.getBudget()+" €");
+        totalBudget.setFont(new Font("Arial", Font.PLAIN, 20));
         totalBudget.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
         totalBudgetLabel.setFont(new Font("Arial", Font.BOLD, 22));
         totalBudgetPanel.add(totalBudgetLabel);
@@ -54,7 +56,8 @@ public class CommunityView extends View implements ParametrizedView{
         usedBudgetPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 0, 0));
         usedBudgetPanel.setLayout(new BoxLayout(usedBudgetPanel, BoxLayout.Y_AXIS));
         JLabel usedBudgetLabel = new JLabel("Budget utilisé :");
-        JLabel usedBudget = new JLabel(" - - - "+"€");
+        JLabel usedBudget = new JLabel(community.getUsedBudget()+" €");
+        usedBudget.setFont(new Font("Arial", Font.PLAIN, 20));
         usedBudget.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
         usedBudgetLabel.setFont(new Font("Arial", Font.BOLD, 22));
         usedBudgetPanel.add(usedBudgetLabel);

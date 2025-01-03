@@ -26,7 +26,7 @@ public class CommunitiesView extends View{
 
         setLayout(new BorderLayout());
 
-        add(new Header(), BorderLayout.NORTH);
+        add(new Header(true, navigationManager), BorderLayout.NORTH);
 
         JPanel main = new JPanel();
         main.setLayout(new BorderLayout());
