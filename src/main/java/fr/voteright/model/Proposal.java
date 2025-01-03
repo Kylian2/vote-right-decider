@@ -2,6 +2,8 @@ package fr.voteright.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class Proposal {
 
     @SerializedName("PRO_id_NB")
@@ -154,38 +156,19 @@ public class Proposal {
      * s'il a exprimé un vote positif ou a réagi positivement (en likant) sans avoir
      * exprimé un vote négatif.
      *
-     * @param nbUser Le nombre total d'utilisateurs.
      * @return Le nombre d'utilisateurs satisfaits.
      */
-    public int satisfiedUser(int nbUser){
+    public int satisfiedUser(){
 
-        boolean[] like = new boolean[nbUser];
-        boolean[] negative = new boolean[nbUser];
+        int likeCount = vote.getPositive().size();
 
-        for(int i = 0; i < vote.getPositive().size(); i++){
-            if(!like[vote.getPositive().get(i)-1]){
-                like[vote.getPositive().get(i)-1] = true;
-            }
-        }
-
-        for(int i = 0; i < vote.getNegative().size(); i++){
-            if(!negative[vote.getNegative().get(i)-1]){
-                negative[vote.getNegative().get(i)-1] = true;
-            }
-        }
 
         for(int i = 0; i < reaction.getLike().size(); i++){
-            if(!like[reaction.getLike().get(i)-1] && !negative[reaction.getLike().get(i)-1]){
-                like[reaction.getLike().get(i)-1] = true;
+            if(!vote.getNegative().contains(reaction.getLike().get(i)) && !vote.getPositive().contains(reaction.getLike().get(i))){
+                likeCount++;
             }
         }
 
-        int nbSatisfiedUser = 0;
-        for(boolean b : like){
-            if(b){
-                nbSatisfiedUser++;
-            }
-        }
-        return nbSatisfiedUser;
+        return likeCount;
     }
 }

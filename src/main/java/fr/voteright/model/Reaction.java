@@ -1,9 +1,13 @@
 package fr.voteright.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class Reaction {
+    @SerializedName("like")
     private ArrayList<Integer> like;
+    @SerializedName("dislike")
     private ArrayList<Integer> dislike;
 
     public Reaction(ArrayList<Integer> like, ArrayList<Integer> dislike) {

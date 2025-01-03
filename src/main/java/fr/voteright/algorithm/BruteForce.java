@@ -40,23 +40,23 @@ public class BruteForce {
 
         List<Proposal> maximiseTotalSatisfaction = bruteForce.maximizeTotalSatisfaction(proposals, community);
         if(greedy.totalSatisfaction(maximiseTotalSatisfaction.toArrayList(), community) == 70){
-            System.out.println("OK -- GREEDY MAXIMISE TOTAL SATISFACTION -- TEST PASSED");
+            System.out.println("OK -- BRUTE FORCE MAXIMISE TOTAL SATISFACTION -- TEST PASSED");
         }else{
-            System.out.println("ERROR -- GREEDY MAXIMISE TOTAL SATISFACTION -- TEST FAILED 64 EXPECTED, OBTAINED " + greedy.totalSatisfaction(maximiseTotalSatisfaction.toArrayList(), community));
+            System.out.println("ERROR -- BRUTE FORCE MAXIMISE TOTAL SATISFACTION -- TEST FAILED 64 EXPECTED, OBTAINED " + greedy.totalSatisfaction(maximiseTotalSatisfaction.toArrayList(), community));
         }
 
         try{
             bruteForce.maximizeTotalSatisfaction(new ArrayList<>(), community);
-            System.out.println("ERROR -- GREEDY MAXIMISE TOTAL SATISFACTION -- EXCEPTION EXPECTED BECAUSE OF EMPTY LIST");
+            System.out.println("ERROR -- BRUTE FORCE MAXIMISE TOTAL SATISFACTION -- EXCEPTION EXPECTED BECAUSE OF EMPTY LIST");
         }catch (Exception e){
-            System.out.println("OK -- GREEDY MAXIMISE TOTAL SATISFACTION -- TEST PASSED");
+            System.out.println("OK -- BRUTE FORCE MAXIMISE TOTAL SATISFACTION -- TEST PASSED");
         }
 
         try{
             bruteForce.maximizeTotalSatisfaction(new ArrayList<>(), null);
-            System.out.println("ERROR -- GREEDY MAXIMISE TOTAL SATISFACTION -- EXCEPTION EXPECTED BECAUSE OF INVALID COMMUNITY");
+            System.out.println("ERROR -- BRUTE FORCE MAXIMISE TOTAL SATISFACTION -- EXCEPTION EXPECTED BECAUSE OF INVALID COMMUNITY");
         }catch (Exception e){
-            System.out.println("OK -- GREEDY MAXIMISE TOTAL SATISFACTION -- TEST PASSED");
+            System.out.println("OK -- BRUTE FORCE MAXIMISE TOTAL SATISFACTION -- TEST PASSED");
         }
 
         maximiseTotalSatisfaction = greedy.maximizeTotalSatisfaction(proposals, communityWithoutBudget);
@@ -195,7 +195,7 @@ public class BruteForce {
     public int totalSatisfaction(ArrayList<Proposal> proposals, Community community){
         int totalSatisfaction = 0;
         for(Proposal p : proposals){
-            totalSatisfaction += p.satisfiedUser(community.getNumberOfMembers());
+            totalSatisfaction += p.satisfiedUser();
         }
         return totalSatisfaction;
     }

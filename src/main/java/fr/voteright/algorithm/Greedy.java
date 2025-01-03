@@ -103,7 +103,7 @@ public class Greedy {
         int satisfactionScoreMax = 0;
 
         for (int i = 0; i < validProposals.size(); i++) {
-            int satisfactionScore = validProposals.get(i).satisfiedUser(community.getNumberOfMembers());
+            int satisfactionScore = validProposals.get(i).satisfiedUser();
             if(satisfactionScore > satisfactionScoreMax){
                 satisfactionScoreMax = satisfactionScore;
                 best = i;
@@ -123,7 +123,7 @@ public class Greedy {
     public int totalSatisfaction(ArrayList<Proposal> proposals, Community community){
         int totalSatisfaction = 0;
         for(Proposal p : proposals){
-            totalSatisfaction += p.satisfiedUser(community.getNumberOfMembers());
+            totalSatisfaction += p.satisfiedUser();
         }
         return totalSatisfaction;
     }
