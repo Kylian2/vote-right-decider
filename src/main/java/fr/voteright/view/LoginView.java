@@ -88,6 +88,8 @@ public class LoginView extends View {
                 boolean validCredentials = controller.login(emailField.getText(), new String(passwordField.getPassword()));
                 if(validCredentials) {
                    navigationManager.showView("communities");
+                   emailField.setText("");
+                   passwordField.setText("");
                 } else {
                     JOptionPane.showMessageDialog(null, "Email ou mot de passe incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
