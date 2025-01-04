@@ -19,4 +19,15 @@ public class LoginController {
         }
     }
 
+    public boolean disconnect(){
+        try {
+            String jsonBody = "{}";
+            String response = HttpUtil.post("https://api.voteright.fr/auth/logout", jsonBody);
+            return response.equals("true");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

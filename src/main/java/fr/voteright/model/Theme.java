@@ -1,7 +1,5 @@
 package fr.voteright.model;
-
 import com.google.gson.annotations.SerializedName;
-
 public class Theme {
     @SerializedName("THM_id_NB")
     private int id;
@@ -9,38 +7,45 @@ public class Theme {
     @SerializedName("THM_name_VC")
     private String name;
 
-    @SerializedName("THM_amount_NB")
-    private float amount;
+    @SerializedName("BUT_amount_NB")
+    private int budget;
 
-    // Constructeurs, getters et setters
+    @SerializedName("BUT_used_budget_NB")
+    private int usedBudget;
 
-    public Theme(int idTheme,String name, float amount) {
+    public Theme(int id, String name, int amount) {
         this.id = id;
         this.name = name;
-        this.amount = amount;
+        this.budget = amount;
+        this.usedBudget = 0;
     }
 
-    public int getId() {
-        return id;
+    public Theme(Theme theme) {
+        this.id = theme.id;
+        this.name = theme.name;
+        this.budget = theme.budget;
+        this.usedBudget = theme.usedBudget;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getUsedBudget() {
+        return usedBudget;
+    }
+
+    public void useBudget(int amount){
+        if(amount <= budget){
+            this.usedBudget += amount;
+        }
+    }
+
+    public void setBudget(int budget) {
+        this.budget = budget;
+    }
+
+    public int getBudget() {
+        return budget;
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public float getAmount() {
-        return amount;
-    }
-
-    public void setAmount(float amount) {
-        this.amount = amount;
     }
 }

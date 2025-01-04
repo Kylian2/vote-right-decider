@@ -1,9 +1,12 @@
 package fr.voteright.view;
 
+import fr.voteright.controller.LoginController;
 import fr.voteright.controller.NavigationManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Header extends JPanel {
 
@@ -35,9 +38,22 @@ public class Header extends JPanel {
         add(logo, BorderLayout.WEST);
 
         if(isLoggedIn) {
+            LoginController controller = new LoginController();
+            JPanel buttons = new JPanel();
+            buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
+            buttons.setBackground(Color.GRAY);
+            add(buttons, BorderLayout.EAST);
             JButton home = new JButton("Accueil");
             home.addActionListener(e -> navigationManager.showView("communities"));
-            add(home, BorderLayout.EAST);
+            buttons.add(home);
+            JButton disconnect = new JButton("Déconnexion");
+            disconnect.addActionListener(e -> {
+                boolean disconnected = controller.disconnect();
+                if(disconnected) {
+                    navigationManager.showView("login");
+                }
+            });
+            buttons.add(disconnect);
         }
     }
 }

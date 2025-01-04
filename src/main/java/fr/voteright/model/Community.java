@@ -2,6 +2,8 @@ package fr.voteright.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class Community {
 
     @SerializedName("CMY_id_NB")
@@ -25,7 +27,17 @@ public class Community {
     @SerializedName("CMY_nb_member_NB")
     private int numberOfMembers;
 
-    // Constructeurs, getters et setters
+    @SerializedName("CMY_budget_NB")
+    private int budget;
+
+    @SerializedName("CMY_used_budget_NB")
+    private int usedBudget;
+
+    @SerializedName("CMY_fixed_fees_NB")
+    private int fixedFees;
+
+    @SerializedName("CMY_budget_theme_NB")
+    private ArrayList<Theme> themes;
 
     public Community(int id, String name, String image, String emoji, String color, String description, int numberOfMembers) {
         this.id = id;
@@ -35,6 +47,31 @@ public class Community {
         this.color = color;
         this.description = description;
         this.numberOfMembers = numberOfMembers;
+    }
+
+    public Community(int budget, ArrayList<Theme> themes, int fixedFees, int nbMembers) {
+        this.budget = budget;
+        this.usedBudget = 0;
+        this.fixedFees = fixedFees;
+        this.themes = themes;
+        this.numberOfMembers = nbMembers;
+    }
+
+    public Community(Community community) {
+        this.id = community.getId();
+        this.name = community.getName();
+        this.image = community.getImage();
+        this.emoji = community.getEmoji();
+        this.color = community.getColor();
+        this.description = community.getDescription();
+        this.numberOfMembers = community.getNumberOfMembers();
+        this.budget = community.getBudget();
+        this.usedBudget = community.getUsedBudget();
+        this.fixedFees = community.getFixedFees();
+        this.themes = new ArrayList<>();
+        for(Theme theme : community.getThemes()){
+            this.themes.add(new Theme(theme));
+        }
     }
 
     public int getId() {
@@ -89,7 +126,34 @@ public class Community {
         return numberOfMembers;
     }
 
-    public void setNumberOfMembers(int numberOfMembers) {
-        this.numberOfMembers = numberOfMembers;
+    public int getBudget() {
+        return budget;
+    }
+
+    public int getUsedBudget() {
+        return usedBudget;
+    }
+
+    public int getFixedFees() {
+        return fixedFees;
+    }
+
+    public ArrayList<Theme> getThemes() {
+        return themes;
+    }
+
+    public void setThemes(ArrayList<Theme> themes) {
+        this.themes = new ArrayList<>();
+        for(Theme theme : themes){
+            this.themes.add(new Theme(theme));
+        }
+    }
+
+    public void setUsedBudget(int usedBudget) {
+        this.usedBudget = usedBudget;
+    }
+
+    public void setBudget(int budget) {
+        this.budget = budget;
     }
 }

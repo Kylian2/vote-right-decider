@@ -11,6 +11,8 @@ target/
 *.iws
 *.iml
 *.ipr
+*.eml
+vote-right-decider.userlibraries
 
 ### Eclipse ###
 .apt_generated
@@ -20,6 +22,7 @@ target/
 .settings
 .springBeans
 .sts4-cache
+.metadata/*
 
 ### NetBeans ###
 /nbproject/private/
