@@ -21,4 +21,15 @@ public class ProposalController {
         }
     }
 
+    public Proposal getProposal(int id){
+        try{
+            String response = HttpUtil.get("https://api.voteright.fr/proposals/"+id);
+            Gson gson = new Gson();
+            Proposal proposal = gson.fromJson(response, Proposal.class);
+            return proposal;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

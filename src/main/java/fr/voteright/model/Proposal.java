@@ -10,6 +10,9 @@ public class Proposal {
     @SerializedName("PRO_title_VC")
     private String title;
 
+    @SerializedName("PRO_description_TXT")
+    private String description;
+
     @SerializedName("PRO_color_VC")
     private String color;
 
@@ -39,9 +42,10 @@ public class Proposal {
 
     // Constructeur, getters et setters
 
-    public Proposal(int id, String title, String color, String period, int budget, int theme, int likeCount, int dislikeCount, int loveCount, int hateCount) {
+    public Proposal(int id, String title, String description,String color, String period, int budget, int theme, int likeCount, int dislikeCount, int loveCount, int hateCount) {
         this.id = id;
         this.title = title;
+        this.description = description;
         this.color = color;
         this.period = period;
         this.budget = budget;
@@ -52,9 +56,10 @@ public class Proposal {
         this.hateCount = hateCount;
     }
 
-    public Proposal(int id, String title, int budget, Vote vote, Reaction reaction) {
+    public Proposal(int id, String title, String description, int budget, Vote vote, Reaction reaction) {
         this.id = id;
         this.title = title;
+        this.description = description;
         this.budget = budget;
         this.vote = vote;
         this.reaction = reaction;
@@ -74,6 +79,14 @@ public class Proposal {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getColor() {
