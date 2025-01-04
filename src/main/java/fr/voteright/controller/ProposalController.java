@@ -13,8 +13,8 @@ public class ProposalController {
         try{
             String response = HttpUtil.get("https://api.voteright.fr/communities/"+communityId+"/ongoing");
             Gson gson = new Gson();
-            Proposal[] communities = gson.fromJson(response, Proposal[].class);
-            return new ArrayList<>(Arrays.asList(communities));
+            Proposal[] proposals = gson.fromJson(response, Proposal[].class);
+            return new ArrayList<>(Arrays.asList(proposals));
         }catch (Exception e){
             e.printStackTrace();
             return null;
