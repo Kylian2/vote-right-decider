@@ -1,20 +1,22 @@
 # Les algorithmes
 
-Les résultats attendu sont donnés selon les jeux de test contenu dans les json d'exemples.
+Les résultats attendus sont donnés selon les jeux de test contenu dans les json d'exemples.
 
 Les critères gloutons sont regroupés dans la classe `Greedy`, les algorithmes de force brute dans la classe `BruteForce`
 
 ## Maximiser la satisfaction en respectant les contraintes budgétaires
 *Kylian Richard*
 
-Ce mode de décision permet de choisir la combinaison de proposition qui abouti au nombre d'utilisateur satisfait le plus élévé 
-en selectionnant uniquement les propositions qui respectent les contraintes budgetaires. 
+Ce mode de décision permet de choisir la combinaison de proposition qui abouti au nombre d'utilisateurs satisfait le plus élévé 
+en selection uniquement les propositions qui respectent les contraintes budgetary. 
 
-### Critère gloutons 1 
+### Critère glouton 1 
 
 `maximizeTotalSatisfaction(ArrayList<Proposal>, Community)`
-Parcours les propositions qui respectent les contraintes budgétaires en comptant le nombre de personne satisfaite par chaque proposition, 
-selectionne celle qui a le plus satisfaction puis relance l'algorithme avec les propositions restantes.
+Parcours les propositions qui respectent les contraintes budgétaires en comptant le nombre de personnes satisfait par chaque proposition, 
+selection celle qui a le plus satisfaction puis relance l'algorithme avec les propositions restantes.
+La mémorisation est mise en place avec une méthode annexe qui verifies la table de hachage avant sont execution pour récupérer la solution déjà trouvée si elle existe, 
+si elle n'existe pas l'algorithme s'exécute et remplit la table avec la solution trouvée. 
 
 #### Test 
 
@@ -23,7 +25,7 @@ selectionne celle qui a le plus satisfaction puis relance l'algorithme avec les 
 - Liste vide, le lancement d'une erreur est attendu
 - Communauté invalide, le lancement d'une erreur est attendu
 
-### Critère gloutons 2
+### Critère glouton 2
 
 `maximizeTotalSatisfactionRatio(ArrayList<Proposal>, Community)`
 Parcours les propositions qui respectent les contraintes budgétaires en faisant un ratio budget/(utilisateur satisfait) puis selectionne la proposition 
@@ -39,8 +41,8 @@ avec le ratio le plus faible. Relance l'algorithme sur la liste de proposition r
 ### Brute Force
 
 `maximizeTotalSatisfaction(ArrayList<Proposal>, Community)`
-Renvoie la meilleur combinaison du mode de décision en parcourant chacune des combinaisons possibles. L'algorithme a été améliorer en utilisant la mémoïsation
-pour ne pas avoir a recalculer des problèmes déjà résolus.
+Renvoie la meilleure combinaison du mode de décision en parcourant chacune des combinaisons possibles. L'algorithme a été améliorer en utilisant la mémoïsation
+pour ne pas avoir à recalculer des problèmes déjà résolus.
 
 #### Test 
 
