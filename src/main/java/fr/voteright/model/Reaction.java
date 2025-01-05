@@ -1,28 +1,23 @@
 package fr.voteright.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class Reaction {
-    private int like;
-    private int nblove;
-    private int dislike;
-    private int nbhate;
-    private int percentageSatisfaction;
+    @SerializedName("like")
+    private ArrayList<Integer> like;
+    @SerializedName("dislike")
+    private ArrayList<Integer> dislike;
 
-    public Reaction(int like, int nblove, int dislike, int nbhate, int percentageSatisfaction) {
+    public Reaction(ArrayList<Integer> like, ArrayList<Integer> dislike) {
         this.like = like;
-        this.nblove = like;
         this.dislike = dislike;
-        this.nbhate = dislike;
-        this.percentageSatisfaction = percentageSatisfaction;
     }
 
     public Reaction(Reaction reaction) {
-        this.like = reaction.like;
-        this.nblove = reaction.nblove;
-        this.dislike = reaction.dislike;
-        this.nbhate = reaction.nbhate;
-        this.percentageSatisfaction = reaction.percentageSatisfaction;
+        this.like = new ArrayList<>(reaction.like);
+        this.dislike = new ArrayList<>(reaction.dislike);
     }
 
     @Override
@@ -33,13 +28,11 @@ public class Reaction {
                 '}';
     }
 
-    public int getLike() {return like;}
+    public ArrayList<Integer> getLike() {
+        return like;
+    }
 
-    public int getNblove() {return nblove;}
-
-    public int getDislike() {return dislike;}
-
-    public int getNbhate() {return nbhate;}
-
-    public int getPercentageSatisfaction() {return percentageSatisfaction;}
+    public ArrayList<Integer> getDislike() {
+        return dislike;
+    }
 }

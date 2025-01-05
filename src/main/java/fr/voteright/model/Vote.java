@@ -1,39 +1,25 @@
 package fr.voteright.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class Vote {
-    private String system;
-    private int nbRound;
-    private int percentageParticipation;
-
+    @SerializedName("system")
+    private int system;
+    @SerializedName("positive")
     private ArrayList<Integer> positive;
+    @SerializedName("negative")
     private ArrayList<Integer> negative;
 
-    public Vote(ArrayList<Integer> positive, ArrayList<Integer> negative, String system, int nbRound, int percentageParticipation) {
+    public Vote(ArrayList<Integer> positive, ArrayList<Integer> negative, int system) {
         this.positive = positive;
         this.negative = negative;
         this.system = system;
-        this.nbRound = nbRound;
-        this.percentageParticipation = percentageParticipation;
     }
 
-    public Vote(String system, int nbRound, int percentageParticipation) {
-        this.system = system;
-        this.nbRound = nbRound;
-        this.percentageParticipation = percentageParticipation;
-    }
-
-    public String getSystem() {
+    public int getSystem() {
         return system;
-    }
-
-    public int getNbRound() {
-        return nbRound;
-    }
-
-    public int getpercentageParticipation() {
-        return percentageParticipation;
     }
 
     public ArrayList<Integer> getPositive() {
