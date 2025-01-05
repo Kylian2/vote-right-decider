@@ -1,7 +1,7 @@
 package fr.voteright.controller;
 
 import com.google.gson.Gson;
-import fr.voteright.model.Proposal;
+import fr.voteright.model.Theme;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -42,7 +42,7 @@ public class CommunityView extends View implements ParametrizedView{
         totalBudgetPanel.setBackground(Color.lightGray);
         totalBudgetPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 0, 0));
         totalBudgetPanel.setLayout(new BoxLayout(totalBudgetPanel, BoxLayout.Y_AXIS));
-        JLabel totalBudgetLabel = new JLabel("Budget Total :");
+        JLabel totalBudgetLabel = new JLabel("Budget total :");
         JLabel totalBudget = new JLabel(community.getBudget()+" €");
         totalBudget.setFont(new Font("Arial", Font.PLAIN, 20));
         totalBudget.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
@@ -61,6 +61,11 @@ public class CommunityView extends View implements ParametrizedView{
         usedBudgetLabel.setFont(new Font("Arial", Font.BOLD, 22));
         usedBudgetPanel.add(usedBudgetLabel);
         usedBudgetPanel.add(usedBudget);
+
+        JButton edit = new JButton("Modifier");
+        HashMap<String, Object> paramEditBudget = new HashMap<>();
+        paramEditBudget.put("themeBudgetEditor", community.getId());
+        edit.addActionListener(e -> navigationManager.showView("themeBudgetEditor", paramEditBudget));
 
         JPanel content = new JPanel(new BorderLayout());
         content.setBackground(Color.WHITE);
@@ -98,6 +103,7 @@ public class CommunityView extends View implements ParametrizedView{
 
         leftSide.add(totalBudgetPanel);
         leftSide.add(usedBudgetPanel);
+        leftSide.add(edit);
 
         content.add(titlePanel, BorderLayout.NORTH);
         content.add(scrollPane, BorderLayout.CENTER);
