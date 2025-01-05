@@ -54,11 +54,11 @@ public class ProposalView extends View implements ParametrizedView{
         JLabel likeLabel = new JLabel("Pourcentage de j'aime :");
         likeLabel.setFont(new Font("Arial", Font.BOLD, 20));
         statsPanel.add(likeLabel);
-        //statsPanel.add(new JLabel(proposal.getVote().getPercentagePositive() + "%"));
-        JLabel voteLabel = new JLabel("Pourcentage de votants :");
+        statsPanel.add(new JLabel(proposal.getSatisfaction()+ "%"));
+        JLabel voteLabel = new JLabel("Thème de la proposition :");
         voteLabel.setFont(new Font("Arial", Font.BOLD, 20));
         statsPanel.add(voteLabel);
-        //statsPanel.add(new JLabel(proposal.getVote().getpercentageParticipation() + "%"));
+        statsPanel.add(new JLabel(proposal.getThemeTextuel()+ "%"));
         centerPanel.add(statsPanel);
 
         main.add(centerPanel);

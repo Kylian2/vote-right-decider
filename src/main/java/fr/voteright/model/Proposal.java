@@ -12,46 +12,33 @@ public class Proposal {
     @SerializedName("PRO_title_VC")
     private String title;
 
-    @SerializedName("PRO_color_VC")
-    private String color;
+    @SerializedName("PRO_description_TXT")
+    private String description;
 
-    @SerializedName("PRO_period_YEAR")
-    private String period;
+    @SerializedName("PRO_satifaction_NB")
+    private int satisfactionPercentage;
 
     @SerializedName("PRO_budget_NB")
     private int budget;
 
+    @SerializedName("PRO_theme_VC")
+    private String themeTextuel;
+
     @SerializedName("PRO_theme_NB")
     private int theme;
-
-    @SerializedName("PRO_like_NB")
-    private int likeCount;
-
-    @SerializedName("PRO_dislike_NB")
-    private int dislikeCount;
-
-    @SerializedName("PRO_love_NB")
-    private int loveCount;
-
-    @SerializedName("PRO_hate_NB")
-    private int hateCount;
 
     private Vote vote;
     private Reaction reaction;
 
     // Constructeur, getters et setters
 
-    public Proposal(int id, String title, String color, String period, int budget, int theme, int likeCount, int dislikeCount, int loveCount, int hateCount) {
+    public Proposal(int id, String title, String description, int satisfactionPercentage, int budget, String themeTextuel) {
         this.id = id;
         this.title = title;
-        this.color = color;
-        this.period = period;
+        this.description = description;
+        this.satisfactionPercentage = satisfactionPercentage;
         this.budget = budget;
-        this.theme = theme;
-        this.likeCount = likeCount;
-        this.dislikeCount = dislikeCount;
-        this.loveCount = loveCount;
-        this.hateCount = hateCount;
+        this.themeTextuel = themeTextuel;
     }
 
     public Proposal(int id, String title, int budget, Vote vote, Reaction reaction) {
@@ -78,20 +65,20 @@ public class Proposal {
         this.title = title;
     }
 
-    public String getColor() {
-        return color;
+    public String getDescription() {
+        return description;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setDescription(String description) {
+        this.title = description;
     }
 
-    public String getPeriod() {
-        return period;
+    public int getSatisfaction() {
+        return satisfactionPercentage;
     }
 
-    public void setPeriod(String period) {
-        this.period = period;
+    public void setSatisfaction(int satisfactionPercentage) {
+        this.satisfactionPercentage = satisfactionPercentage;
     }
 
     public int getBudget() {
@@ -110,36 +97,12 @@ public class Proposal {
         this.theme = theme;
     }
 
-    public int getLikeCount() {
-        return likeCount;
+    public String getThemeTextuel() {
+        return themeTextuel;
     }
 
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
-    }
-
-    public int getDislikeCount() {
-        return dislikeCount;
-    }
-
-    public void setDislikeCount(int dislikeCount) {
-        this.dislikeCount = dislikeCount;
-    }
-
-    public int getLoveCount() {
-        return loveCount;
-    }
-
-    public void setLoveCount(int loveCount) {
-        this.loveCount = loveCount;
-    }
-
-    public int getHateCount() {
-        return hateCount;
-    }
-
-    public void setHateCount(int hateCount) {
-        this.hateCount = hateCount;
+    public void setTheme(String themeTextuel) {
+        this.themeTextuel = themeTextuel;
     }
 
     public Reaction getReaction() {
