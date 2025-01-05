@@ -8,6 +8,7 @@ import fr.voteright.model.Proposal;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.*;
 
@@ -62,10 +63,16 @@ public class CommunityView extends View implements ParametrizedView{
         usedBudgetPanel.add(usedBudgetLabel);
         usedBudgetPanel.add(usedBudget);
 
+        JPanel editPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        editPanel.setBackground(Color.lightGray);
+        editPanel.setBorder(BorderFactory.createEmptyBorder(400, 80, 0, 0));
         JButton edit = new JButton("Modifier");
+        edit.setPreferredSize(new Dimension(105, 35));
+        edit.setFont(new Font("Arial", Font.PLAIN, 17));
         HashMap<String, Object> paramEditBudget = new HashMap<>();
         paramEditBudget.put("themeBudgetEditor", community.getId());
         edit.addActionListener(e -> navigationManager.showView("themeBudgetEditor", paramEditBudget));
+        editPanel.add(edit);
 
         JPanel content = new JPanel(new BorderLayout());
         content.setBackground(Color.WHITE);
@@ -103,7 +110,7 @@ public class CommunityView extends View implements ParametrizedView{
 
         leftSide.add(totalBudgetPanel);
         leftSide.add(usedBudgetPanel);
-        leftSide.add(edit);
+        leftSide.add(editPanel);
 
         content.add(titlePanel, BorderLayout.NORTH);
         content.add(scrollPane, BorderLayout.CENTER);
