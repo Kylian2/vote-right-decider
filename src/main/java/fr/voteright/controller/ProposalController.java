@@ -2,6 +2,10 @@ package fr.voteright.controller;
 
 import com.google.gson.*;
 import fr.voteright.model.Proposal;
+import fr.voteright.model.Community;
+import fr.voteright.algorithm.BruteForce;
+import fr.voteright.algorithm.Greedy;
+import fr.voteright.algorithm.Mock;
 
 import java.util.ArrayList;
 import java.util.Arrays;
