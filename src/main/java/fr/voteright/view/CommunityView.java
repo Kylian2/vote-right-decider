@@ -9,7 +9,10 @@ import fr.voteright.model.Proposal;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class CommunityView extends View implements ParametrizedView{
@@ -84,6 +87,15 @@ public class CommunityView extends View implements ParametrizedView{
             proposalPanel.add(proposalTitle, BorderLayout.WEST);
             proposalsPanel.add(proposalPanel);
             proposalsPanel.add(Box.createVerticalStrut(10));
+            int finalI = p.getId();
+            proposalPanel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    HashMap<String, Object> params = new HashMap<>();
+                    params.put("proposal", finalI);
+                    navigationManager.showView("proposal", params);
+                }
+            });
         }
 
         JScrollPane scrollPane = new JScrollPane(proposalsPanel);

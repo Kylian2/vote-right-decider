@@ -3,17 +3,26 @@ package fr.voteright.model;
 import java.util.ArrayList;
 
 public class Reaction {
-    private ArrayList<Integer> like;
-    private ArrayList<Integer> dislike;
+    private int like;
+    private int nblove;
+    private int dislike;
+    private int nbhate;
+    private int percentageSatisfaction;
 
-    public Reaction(ArrayList<Integer> like, ArrayList<Integer> dislike) {
+    public Reaction(int like, int nblove, int dislike, int nbhate, int percentageSatisfaction) {
         this.like = like;
+        this.nblove = like;
         this.dislike = dislike;
+        this.nbhate = dislike;
+        this.percentageSatisfaction = percentageSatisfaction;
     }
 
     public Reaction(Reaction reaction) {
-        this.like = new ArrayList<>(reaction.like);
-        this.dislike = new ArrayList<>(reaction.dislike);
+        this.like = reaction.like;
+        this.nblove = reaction.nblove;
+        this.dislike = reaction.dislike;
+        this.nbhate = reaction.nbhate;
+        this.percentageSatisfaction = reaction.percentageSatisfaction;
     }
 
     @Override
@@ -24,11 +33,13 @@ public class Reaction {
                 '}';
     }
 
-    public ArrayList<Integer> getLike() {
-        return like;
-    }
+    public int getLike() {return like;}
 
-    public ArrayList<Integer> getDislike() {
-        return dislike;
-    }
+    public int getNblove() {return nblove;}
+
+    public int getDislike() {return dislike;}
+
+    public int getNbhate() {return nbhate;}
+
+    public int getPercentageSatisfaction() {return percentageSatisfaction;}
 }

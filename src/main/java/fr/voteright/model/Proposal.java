@@ -25,24 +25,12 @@ public class Proposal {
     @SerializedName("PRO_theme_NB")
     private int theme;
 
-    @SerializedName("PRO_like_NB")
-    private int likeCount;
-
-    @SerializedName("PRO_dislike_NB")
-    private int dislikeCount;
-
-    @SerializedName("PRO_love_NB")
-    private int loveCount;
-
-    @SerializedName("PRO_hate_NB")
-    private int hateCount;
-
     private Vote vote;
     private Reaction reaction;
 
     // Constructeur, getters et setters
 
-    public Proposal(int id, String title, String description,String color, String period, int budget, int theme, int likeCount, int dislikeCount, int loveCount, int hateCount) {
+    public Proposal(int id, String title, String description,String color, String period, int budget, int theme) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -50,10 +38,6 @@ public class Proposal {
         this.period = period;
         this.budget = budget;
         this.theme = theme;
-        this.likeCount = likeCount;
-        this.dislikeCount = dislikeCount;
-        this.loveCount = loveCount;
-        this.hateCount = hateCount;
     }
 
     public Proposal(int id, String title, String description, int budget, Vote vote, Reaction reaction) {
@@ -121,38 +105,6 @@ public class Proposal {
         this.theme = theme;
     }
 
-    public int getLikeCount() {
-        return likeCount;
-    }
-
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
-    }
-
-    public int getDislikeCount() {
-        return dislikeCount;
-    }
-
-    public void setDislikeCount(int dislikeCount) {
-        this.dislikeCount = dislikeCount;
-    }
-
-    public int getLoveCount() {
-        return loveCount;
-    }
-
-    public void setLoveCount(int loveCount) {
-        this.loveCount = loveCount;
-    }
-
-    public int getHateCount() {
-        return hateCount;
-    }
-
-    public void setHateCount(int hateCount) {
-        this.hateCount = hateCount;
-    }
-
     public Reaction getReaction() {
         return reaction;
     }
@@ -169,7 +121,7 @@ public class Proposal {
      *
      * @param nbUser Le nombre total d'utilisateurs.
      * @return Le nombre d'utilisateurs satisfaits.
-     */
+
     public int satisfiedUser(int nbUser){
 
         boolean[] like = new boolean[nbUser];
@@ -201,4 +153,5 @@ public class Proposal {
         }
         return nbSatisfiedUser;
     }
+     */
 }
