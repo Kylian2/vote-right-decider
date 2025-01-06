@@ -63,16 +63,12 @@ public class CommunityView extends View implements ParametrizedView{
         usedBudgetPanel.add(usedBudgetLabel);
         usedBudgetPanel.add(usedBudget);
 
-        JPanel editPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        editPanel.setBackground(Color.lightGray);
-        editPanel.setBorder(BorderFactory.createEmptyBorder(400, 80, 0, 0));
         JButton edit = new JButton("Modifier");
-        edit.setPreferredSize(new Dimension(105, 35));
-        edit.setFont(new Font("Arial", Font.PLAIN, 17));
+        edit.setPreferredSize(new Dimension(90, 30));
+        edit.setFont(new Font("Arial", Font.PLAIN, 15));
         HashMap<String, Object> paramEditBudget = new HashMap<>();
         paramEditBudget.put("themeBudgetEditor", community.getId());
         edit.addActionListener(e -> navigationManager.showView("themeBudgetEditor", paramEditBudget));
-        editPanel.add(edit);
 
         JPanel content = new JPanel(new BorderLayout());
         content.setBackground(Color.WHITE);
@@ -110,7 +106,7 @@ public class CommunityView extends View implements ParametrizedView{
 
         leftSide.add(totalBudgetPanel);
         leftSide.add(usedBudgetPanel);
-        leftSide.add(editPanel);
+        leftSide.add(edit);
 
         content.add(titlePanel, BorderLayout.NORTH);
         content.add(scrollPane, BorderLayout.CENTER);
