@@ -19,7 +19,7 @@ public class Proposal {
     private String period;
 
     @SerializedName("PRO_budget_NB")
-    private int budget;
+    private float budget;
 
     @SerializedName("PRO_theme_NB")
     private int theme;
@@ -41,7 +41,7 @@ public class Proposal {
 
     // Constructeur, getters et setters
 
-    public Proposal(int id, String title, String color, String period, int budget, int theme, int likeCount, int dislikeCount, int loveCount, int hateCount) {
+    public Proposal(int id, String title, String color, String period, float budget, int theme, int likeCount, int dislikeCount, int loveCount, int hateCount) {
         this.id = id;
         this.title = title;
         this.color = color;
@@ -54,7 +54,7 @@ public class Proposal {
         this.hateCount = hateCount;
     }
 
-    public Proposal(int id, String title, int budget, Vote vote, Reaction reaction) {
+    public Proposal(int id, String title, float budget, Vote vote, Reaction reaction) {
         this.id = id;
         this.title = title;
         this.budget = budget;
@@ -94,11 +94,11 @@ public class Proposal {
         this.period = period;
     }
 
-    public int getBudget() {
+    public float getBudget() {
         return budget;
     }
 
-    public void setBudget(int budget) {
+    public void setBudget(float budget) {
         this.budget = budget;
     }
 

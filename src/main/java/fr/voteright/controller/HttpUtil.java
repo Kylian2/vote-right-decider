@@ -56,6 +56,26 @@ public class HttpUtil {
     }
 
     /**
+     * Effectue une requête PATCH avec un corps JSON.
+     *
+     * @param url L'URL de la requête.
+     * @param jsonBody Le corps de la requête au format JSON.
+     * @return La réponse sous forme de chaîne de caractères.
+     * @throws Exception En cas d'erreur.
+     */
+    public static String patch(String url, String jsonBody) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json") // Indique que le corps est JSON
+                .header("Accept", "application/json")       // Indique qu'on attend une réponse JSON
+                .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        HttpResponse<String> response = CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+        return handleResponse(response);
+    }
+
+    /**
      * Effectue une requête PUT avec un corps JSON.
      *
      * @param url L'URL de la requête.

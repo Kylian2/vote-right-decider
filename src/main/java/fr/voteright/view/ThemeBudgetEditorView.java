@@ -11,8 +11,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ThemeBudgetEditorView extends View implements ParametrizedView{
     private int id;
@@ -30,7 +28,7 @@ public class ThemeBudgetEditorView extends View implements ParametrizedView{
 
         HashMap<Theme, JSpinner> themesSpinner = new HashMap<>();
         for (Theme theme : themes) {
-            JSpinner spinner = new JSpinner(new SpinnerNumberModel(theme.getBudget(), 0, 1000000000, 100));
+            JSpinner spinner = new JSpinner(new SpinnerNumberModel((float) theme.getBudget(), 0.00, 999999999999.99, 100));
             themesSpinner.put(theme, spinner);
         }
 
@@ -67,7 +65,7 @@ public class ThemeBudgetEditorView extends View implements ParametrizedView{
             JTextField textField = ((JSpinner.DefaultEditor) themesSpinner.get(thm).getEditor()).getTextField();
             textField.setFont(new Font("Arial", Font.PLAIN, 20));
 
-            JLabel euro = new JLabel("€ /an");
+            JLabel euro = new JLabel("€");
             euro.setFont(new Font("Arial", Font.PLAIN, 28));
 
             block.add(nameLabel);
@@ -92,13 +90,12 @@ public class ThemeBudgetEditorView extends View implements ParametrizedView{
         budgetTotalPanel.setBorder(new EmptyBorder(22, 10, 0, 0));
         budgetTotalPanel.setBackground(Color.WHITE);
 
-        SpinnerNumberModel spinnerModelTotal = new SpinnerNumberModel(community.getBudget(), 0, 1000000000, 100);
-        JSpinner spinnerTotal = new JSpinner(spinnerModelTotal);
+        JSpinner spinnerTotal = new JSpinner(new SpinnerNumberModel(community.getBudget(), 0.00, 999999999999.99, 100));
         spinnerTotal.setPreferredSize(new Dimension(110, 50));
         JTextField textFieldTotal = ((JSpinner.DefaultEditor) spinnerTotal.getEditor()).getTextField();
         textFieldTotal.setFont(new Font("Arial", Font.PLAIN, 20));
 
-        JLabel euroTotal = new JLabel("€ /an");
+        JLabel euroTotal = new JLabel("€");
         euroTotal.setFont(new Font("Arial", Font.PLAIN, 28));
 
         budgetTotalPanel.add(spinnerTotal);
@@ -108,38 +105,46 @@ public class ThemeBudgetEditorView extends View implements ParametrizedView{
         budgetUsedLabel.setFont(new Font("Arial", Font.BOLD, 28));
         budgetUsedLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
-        JPanel budgetUsedPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        budgetUsedPanel.setBorder(new EmptyBorder(22, 10, 0, 0));
-        budgetUsedPanel.setBackground(Color.WHITE);
+        JLabel budgetUsedValue = new JLabel(String.valueOf(community.getUsedBudget()) + " €");
+        budgetUsedValue.setFont(new Font("Arial", Font.PLAIN, 24));
+        budgetUsedValue.setHorizontalAlignment(SwingConstants.LEFT);
+        budgetUsedValue.setBorder(new EmptyBorder(0, 15, 0, 0));
 
-        SpinnerNumberModel spinnerModelUsed= new SpinnerNumberModel(community.getUsedBudget(), 0, 1000000000, 100);
-        JSpinner spinnerUsed = new JSpinner(spinnerModelUsed);
-        spinnerUsed.setPreferredSize(new Dimension(110, 50));
-        JTextField textFieldUsed = ((JSpinner.DefaultEditor) spinnerUsed.getEditor()).getTextField();
-        textFieldUsed.setFont(new Font("Arial", Font.PLAIN, 20));
 
-        JLabel euroUsed = new JLabel("€ /an");
-        euroUsed.setFont(new Font("Arial", Font.PLAIN, 28));
+        JLabel fixedFeesLabel = new JLabel("Frais fixes :");
+        fixedFeesLabel.setFont(new Font("Arial", Font.BOLD, 28));
+        fixedFeesLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
-        budgetUsedPanel.add(spinnerUsed);
-        budgetUsedPanel.add(euroUsed);
+        JPanel fixedFeesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        fixedFeesPanel.setBorder(new EmptyBorder(22, 10, 0, 0));
+        fixedFeesPanel.setBackground(Color.WHITE);
+
+        JSpinner spinnerFixedFees = new JSpinner(new SpinnerNumberModel(community.getFixedFees(), 0.00, 999999999999.99, 100));
+        spinnerFixedFees.setPreferredSize(new Dimension(110, 50));
+        JTextField textFieldFixedFees = ((JSpinner.DefaultEditor) spinnerFixedFees.getEditor()).getTextField();
+        textFieldFixedFees.setFont(new Font("Arial", Font.PLAIN, 20));
+
+        JLabel euroFixedfees = new JLabel("€");
+        euroFixedfees.setFont(new Font("Arial", Font.PLAIN, 28));
+
+        fixedFeesPanel.add(spinnerFixedFees);
+        fixedFeesPanel.add(euroFixedfees);
+
+        JLabel elementName = new JLabel("<html><span style='color:red;'></span></html>");
+        elementName.setFont(new Font("Arial", Font.PLAIN, 22));
+        elementName.setHorizontalAlignment(SwingConstants.RIGHT);
+        JLabel errorLabel = new JLabel("<html><span style='color:red;'></span></html>");
+        errorLabel.setFont(new Font("Arial", Font.PLAIN, 22));
+        errorLabel.setHorizontalAlignment(SwingConstants.LEFT);
 
         rightPanel.add(totalBudgetLabel);
         rightPanel.add(budgetTotalPanel);
         rightPanel.add(budgetUsedLabel);
-        rightPanel.add(budgetUsedPanel);
-        JPanel rightPanel5 = new JPanel();
-        rightPanel5.setBackground(Color.WHITE);
-        JPanel rightPanel6 = new JPanel();
-        rightPanel6.setBackground(Color.WHITE);
-        JPanel rightPanel7 = new JPanel();
-        rightPanel7.setBackground(Color.WHITE);
-        JPanel rightPanel8 = new JPanel();
-        rightPanel8.setBackground(Color.WHITE);
-        rightPanel.add(rightPanel5);
-        rightPanel.add(rightPanel6);
-        rightPanel.add(rightPanel7);
-        rightPanel.add(rightPanel8);
+        rightPanel.add(budgetUsedValue);
+        rightPanel.add(fixedFeesLabel);
+        rightPanel.add(fixedFeesPanel);
+        rightPanel.add(elementName);
+        rightPanel.add(errorLabel);
 
         centerPanel.add(leftPanel);
         centerPanel.add(rightPanel);
@@ -158,7 +163,7 @@ public class ThemeBudgetEditorView extends View implements ParametrizedView{
         returnButton.addActionListener(e -> navigationManager.showView("community", paramReturn));
 
         JButton validateButton = new JButton("Valider");
-        validateButton.addActionListener(e ->confirmation(themesSpinner));
+        validateButton.addActionListener(e ->confirmation(communityController, community, themesSpinner, spinnerTotal, spinnerFixedFees));
         validateButton.setPreferredSize(new Dimension(100, 30));
         validateButton.setBackground(Color.BLACK);
         validateButton.setForeground(Color.WHITE);
@@ -182,56 +187,58 @@ public class ThemeBudgetEditorView extends View implements ParametrizedView{
         }
     }
 
-
-    public void validate(HashMap<Theme, JSpinner> themesMap) {
+    public boolean validate(CommunityController communityController, Community community, HashMap<Theme, JSpinner> themesMap, JSpinner spinnerTotal, JSpinner spinnerFixedFees) {
+        HashMap<Integer, Double> body = new HashMap<>();
+        body.put(0, (Double) spinnerTotal.getValue());
+        body.put(-1, (Double) spinnerFixedFees.getValue());
         for (Theme thm : themesMap.keySet()) {
-            System.out.println(thm.getName() + " : " + themesMap.get(thm).getValue() + " € /an");
+            body.put(thm.getId(), (Double) themesMap.get(thm).getValue());
         }
+
+        return communityController.patchBudget(community, body);
     }
 
-    public void confirmation(HashMap<Theme, JSpinner> themesMap) {
-        if (themesMap != null) {
-            JDialog dialog = new JDialog();
-            dialog.setTitle("Confirmation");
-            dialog.setSize(550, 225);
-            dialog.setModal(true);
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            dialog.setLayout(new BorderLayout());
+    public void confirmation(CommunityController communityController, Community community, HashMap<Theme, JSpinner> themesMap, JSpinner spinnerTotal, JSpinner spinnerFixedFees) {
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Confirmation");
+        dialog.setSize(550, 225);
+        dialog.setModal(true);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setLayout(new BorderLayout());
 
-            JLabel label = new JLabel("<html>Êtes-vous sûr de vouloir valider ce budget ?<br>Cette action sera effective immédiatement.</html>", SwingConstants.CENTER);
-            label.setFont(new Font("Arial", Font.PLAIN, 16));
-            dialog.add(label, BorderLayout.CENTER);
+        JLabel label = new JLabel("<html>Êtes-vous sûr de vouloir valider ce budget ?<br>Cette action sera effective immédiatement.</html>", SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.PLAIN, 16));
+        dialog.add(label, BorderLayout.CENTER);
 
-            JPanel buttonPanel = new JPanel();
-            buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
-            JButton cancelButton = new JButton("Annuler");
-            cancelButton.setPreferredSize(new Dimension(100, 40));
-            cancelButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Fermer la fenêtre modale
-                    dialog.dispose();
-                }
-            });
+        JButton cancelButton = new JButton("Annuler");
+        cancelButton.setPreferredSize(new Dimension(100, 40));
+        cancelButton.addActionListener(e-> dialog.dispose());
 
-            JButton validateButton = new JButton("Valider");
-            validateButton.setPreferredSize(new Dimension(100, 40));
-            validateButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    validate(themesMap);
-                    dialog.dispose();
-                }
-            });
+        JButton validateButton = new JButton("Valider");
+        validateButton.setPreferredSize(new Dimension(100, 40));
+        validateButton.addActionListener(e -> {
+            boolean success = validate(communityController, community, themesMap, spinnerTotal, spinnerFixedFees);
 
-            buttonPanel.add(cancelButton);
-            buttonPanel.add(validateButton);
+            label.setFont(new Font("Arial", Font.PLAIN, 22));
+            if (success) {
+                label.setText("<html><span style='color:green;'>Modifications réussies</span></html>");
+            } else {
+                label.setText("<html><span style='color:red;'>Modifications échouées</span></html>");
+            }
 
-            dialog.add(buttonPanel, BorderLayout.SOUTH);
+            validateButton.setEnabled(false);
+            cancelButton.setText("Fermer");
+        });
 
-            dialog.setLocationRelativeTo(null);
-            dialog.setVisible(true);
-        }
+        buttonPanel.add(cancelButton);
+        buttonPanel.add(validateButton);
+
+        dialog.add(buttonPanel, BorderLayout.SOUTH);
+
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
     }
 }

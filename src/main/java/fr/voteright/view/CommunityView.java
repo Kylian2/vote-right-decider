@@ -63,6 +63,18 @@ public class CommunityView extends View implements ParametrizedView{
         usedBudgetPanel.add(usedBudgetLabel);
         usedBudgetPanel.add(usedBudget);
 
+        JPanel fixedFeesPanel = new JPanel();
+        fixedFeesPanel.setBackground(Color.lightGray);
+        fixedFeesPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 0, 0));
+        fixedFeesPanel.setLayout(new BoxLayout(fixedFeesPanel, BoxLayout.Y_AXIS));
+        JLabel fixedFeesLabel = new JLabel("Frais fixes :");
+        JLabel fixedFees = new JLabel(community.getFixedFees()+" €");
+        fixedFees.setFont(new Font("Arial", Font.PLAIN, 20));
+        fixedFees.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        fixedFeesLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        fixedFeesPanel.add(fixedFeesLabel);
+        fixedFeesPanel.add(fixedFees);
+
         JButton edit = new JButton("Modifier");
         edit.setPreferredSize(new Dimension(90, 30));
         edit.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -106,6 +118,7 @@ public class CommunityView extends View implements ParametrizedView{
 
         leftSide.add(totalBudgetPanel);
         leftSide.add(usedBudgetPanel);
+        leftSide.add(fixedFeesPanel);
         leftSide.add(edit);
 
         content.add(titlePanel, BorderLayout.NORTH);

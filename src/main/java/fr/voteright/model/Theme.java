@@ -8,12 +8,12 @@ public class Theme {
     private String name;
 
     @SerializedName("BUT_amount_NB")
-    private int budget;
+    private float budget;
 
     @SerializedName("BUT_used_budget_NB")
-    private int usedBudget;
+    private float usedBudget;
 
-    public Theme(int id, String name, int amount) {
+    public Theme(int id, String name, float amount) {
         this.id = id;
         this.name = name;
         this.budget = amount;
@@ -27,21 +27,25 @@ public class Theme {
         this.usedBudget = theme.usedBudget;
     }
 
-    public int getUsedBudget() {
+    public int getId() {
+        return id;
+    }
+
+    public float getUsedBudget() {
         return usedBudget;
     }
 
-    public void useBudget(int amount){
+    public void useBudget(float amount){
         if(amount <= budget){
             this.usedBudget += amount;
         }
     }
 
-    public void setBudget(int budget) {
+    public void setBudget(float budget) {
         this.budget = budget;
     }
 
-    public int getBudget() {
+    public float getBudget() {
         return budget;
     }
 
