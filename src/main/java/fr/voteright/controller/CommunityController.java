@@ -55,8 +55,11 @@ public class CommunityController {
             Gson gson = new Gson();
             String jsonBody = gson.toJson(body);
             String response = HttpUtil.patch("https://api.voteright.fr/communities/"+community.getId()+"/budget?period=2024", jsonBody);
-            System.out.println("Response : " + response);
-            return true;
+            if(response.equals("true")){
+                return true;
+            } else {
+                return false;
+            }
         }catch (Exception e){
             e.printStackTrace();
             return false;

@@ -9,8 +9,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ThemeBudgetEditorView extends View implements ParametrizedView{
     private int id;
@@ -26,11 +28,15 @@ public class ThemeBudgetEditorView extends View implements ParametrizedView{
         communityController.getBudget(community);
         ArrayList<Theme> themes = community.getThemes();
 
+        LinkedHashMap<String, String> mapOfIncorrectValues = new LinkedHashMap<>();
+
         HashMap<Theme, JSpinner> themesSpinner = new HashMap<>();
         for (Theme theme : themes) {
             JSpinner spinner = new JSpinner(new SpinnerNumberModel((float) theme.getBudget(), 0.00, 999999999999.99, 100));
             themesSpinner.put(theme, spinner);
         }
+
+        AtomicReference<Double> sumOfThemes = new AtomicReference<>(sum(themesSpinner));
 
         setLayout(new BorderLayout());
         add(new Header(true, navigationManager), BorderLayout.NORTH);
@@ -130,12 +136,12 @@ public class ThemeBudgetEditorView extends View implements ParametrizedView{
         fixedFeesPanel.add(spinnerFixedFees);
         fixedFeesPanel.add(euroFixedfees);
 
-        JLabel elementName = new JLabel("<html><span style='color:red;'></span></html>");
+        JLabel elementName = new JLabel("");
         elementName.setFont(new Font("Arial", Font.PLAIN, 22));
         elementName.setHorizontalAlignment(SwingConstants.RIGHT);
-        JLabel errorLabel = new JLabel("<html><span style='color:red;'></span></html>");
-        errorLabel.setFont(new Font("Arial", Font.PLAIN, 22));
-        errorLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        JLabel incorrectValueLabel = new JLabel("");
+        incorrectValueLabel.setFont(new Font("Arial", Font.PLAIN, 22));
+        incorrectValueLabel.setHorizontalAlignment(SwingConstants.LEFT);
 
         rightPanel.add(totalBudgetLabel);
         rightPanel.add(budgetTotalPanel);
@@ -144,7 +150,7 @@ public class ThemeBudgetEditorView extends View implements ParametrizedView{
         rightPanel.add(fixedFeesLabel);
         rightPanel.add(fixedFeesPanel);
         rightPanel.add(elementName);
-        rightPanel.add(errorLabel);
+        rightPanel.add(incorrectValueLabel);
 
         centerPanel.add(leftPanel);
         centerPanel.add(rightPanel);
@@ -171,6 +177,38 @@ public class ThemeBudgetEditorView extends View implements ParametrizedView{
         southPanel.add(returnButton);
         southPanel.add(validateButton);
 
+        spinnerTotal.addChangeListener(e -> {
+            if ((double) spinnerTotal.getValue() < (double) spinnerFixedFees.getValue() + sumOfThemes.get()){
+                mapOfIncorrectValues.put("Budget total", "budget trop bas");
+            } else {
+                mapOfIncorrectValues.remove("Budget total");
+            }
+            displayIncorrectValuesUpdate(mapOfIncorrectValues, elementName, incorrectValueLabel, validateButton);
+        });
+
+        spinnerFixedFees.addChangeListener(e -> {
+            if ((double) spinnerFixedFees.getValue() > (double) spinnerTotal.getValue() - sumOfThemes.get()){
+                mapOfIncorrectValues.put("Frais fixes", "budget trop haut");
+            } else {
+                mapOfIncorrectValues.remove("Frais fixes");
+            }
+            displayIncorrectValuesUpdate(mapOfIncorrectValues, elementName, incorrectValueLabel, validateButton);
+        });
+
+        for (Theme theme : themesSpinner.keySet()) {
+            themesSpinner.get(theme).addChangeListener(e -> {
+                sumOfThemes.set(sum(themesSpinner));
+                if((double) theme.getUsedBudget() > (double) themesSpinner.get(theme).getValue()){
+                    mapOfIncorrectValues.put(theme.getName(), "budget trop bas");
+                } else if((double) spinnerTotal.getValue() - (double) spinnerFixedFees.getValue() - sumOfThemes.get() < 0 ){
+                    mapOfIncorrectValues.put(theme.getName(), "budget trop haut");
+                } else {
+                    mapOfIncorrectValues.remove(theme.getName());
+                }
+                displayIncorrectValuesUpdate(mapOfIncorrectValues, elementName, incorrectValueLabel, validateButton);
+            });
+        }
+
         main.add(northPanel, BorderLayout.NORTH);
         main.add(centerPanel, BorderLayout.CENTER);
         main.add(southPanel, BorderLayout.SOUTH);
@@ -184,6 +222,29 @@ public class ThemeBudgetEditorView extends View implements ParametrizedView{
             this.removeAll();
             this.id = (int) params.get("themeBudgetEditor");
             this.display();
+        }
+    }
+
+    public double sum(HashMap<Theme, JSpinner> themesSpinner) {
+        double result = 0;
+        for (Theme thm : themesSpinner.keySet()) result += (double) themesSpinner.get(thm).getValue();
+        return result;
+    }
+
+    public void displayIncorrectValuesUpdate(LinkedHashMap<String, String> mapOfIncorrectValues, JLabel elementName, JLabel incorrectValueLabel, JButton validateButton) {
+        if (!mapOfIncorrectValues.isEmpty()) {
+            String lastKey = null;
+            lastKey = mapOfIncorrectValues.keySet().toArray(new String[0])[mapOfIncorrectValues.size() - 1];
+            if(lastKey != null) {
+                String lastValue = mapOfIncorrectValues.get(lastKey);
+                elementName.setText("<html><span style='color:red;'>" + lastKey + " : </span></html>");
+                incorrectValueLabel.setText("<html><span style='color:red;'>" + lastValue + "</span></html>");
+            }
+            if(validateButton.isEnabled()){validateButton.setEnabled(false);}
+        } else {
+            elementName.setText("");
+            incorrectValueLabel.setText("");
+            if(!validateButton.isEnabled()){validateButton.setEnabled(true);}
         }
     }
 
@@ -224,9 +285,9 @@ public class ThemeBudgetEditorView extends View implements ParametrizedView{
 
             label.setFont(new Font("Arial", Font.PLAIN, 22));
             if (success) {
-                label.setText("<html><span style='color:green;'>Modifications réussies</span></html>");
+                label.setText("<html><span style='color:green;'>Modifications effectuées.</span></html>");
             } else {
-                label.setText("<html><span style='color:red;'>Modifications échouées</span></html>");
+                label.setText("<html><span style='color:red;'>Modifications échouées.</span></html>");
             }
 
             validateButton.setEnabled(false);
