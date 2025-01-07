@@ -37,18 +37,8 @@ public class Mock {
         String jsonOutput = generateProposals(nbProposal, nbUser, budget, 5);
         System.out.println(jsonOutput);
 
-        List<Proposal> proposals = convertJsonToProposals(jsonOutput);
-
         String communityJson = generateCommunity(nbTheme, communityBudget, nbUser);
         System.out.println(communityJson);
-
-        Community community = convertJsonToCommunity(communityJson);
-
-        System.out.println(community.getId() + " " + community.getBudget() + " " + community.getThemes().size());
-
-        for(Theme theme : community.getThemes()){
-            System.out.println(theme.getBudget());
-        }
     }
 
     /**
@@ -148,7 +138,7 @@ public class Mock {
      */
     private static ArrayList<Integer> getRandomUsers(int numUsers, Random random) {
         ArrayList<Integer> userList = new ArrayList<>();
-        int numberOfUsers = random.nextInt(numUsers) + 1; // At least 1 user
+        int numberOfUsers = random.nextInt(numUsers) + 1;
 
         while (userList.size() < numberOfUsers) {
             int userId = random.nextInt(numUsers) + 1;

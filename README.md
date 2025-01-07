@@ -7,16 +7,14 @@ Les critères gloutons sont regroupés dans la classe `Greedy`, les algorithmes 
 ## Maximiser la satisfaction en respectant les contraintes budgétaires
 *Kylian Richard*
 
-Ce mode de décision permet de choisir la combinaison de proposition qui abouti au nombre d'utilisateurs satisfait le plus élévé 
-en selection uniquement les propositions qui respectent les contraintes budgetary. 
+Ce mode de décision permet de choisir la combinaison de propositions qui abouti au nombre d'utilisateurs satisfait le plus élevé 
+en selectionnant uniquement les propositions qui respectent les contraintes budgetaires. 
 
 ### Critère glouton 1 
 
 `maximizeTotalSatisfaction(ArrayList<Proposal>, Community)`
 Parcours les propositions qui respectent les contraintes budgétaires en comptant le nombre de personnes satisfait par chaque proposition, 
-selection celle qui a le plus satisfaction puis relance l'algorithme avec les propositions restantes.
-La mémorisation est mise en place avec une méthode annexe qui verifies la table de hachage avant sont execution pour récupérer la solution déjà trouvée si elle existe, 
-si elle n'existe pas l'algorithme s'exécute et remplit la table avec la solution trouvée. 
+selectionne celle qui a le plus de satisfaction puis relance l'algorithme avec les propositions restantes.
 
 #### Test 
 
@@ -43,6 +41,8 @@ avec le ratio le plus faible. Relance l'algorithme sur la liste de proposition r
 `maximizeTotalSatisfaction(ArrayList<Proposal>, Community)`
 Renvoie la meilleure combinaison du mode de décision en parcourant chacune des combinaisons possibles. L'algorithme a été améliorer en utilisant la mémoïsation
 pour ne pas avoir à recalculer des problèmes déjà résolus.
+La mémoïsation est mise en place avec une méthode annexe qui verifie la table de hachage avant son execution pour récupérer la solution déjà trouvée si elle existe,
+si elle n'existe pas l'algorithme s'exécute et remplit la table avec la meilleure solution trouvée.
 
 #### Test 
 
