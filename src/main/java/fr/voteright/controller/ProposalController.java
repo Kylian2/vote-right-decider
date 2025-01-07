@@ -15,7 +15,7 @@ public class ProposalController {
 
     public ArrayList<Proposal> getProposalsOf(int communityId){
         try{
-            String response = HttpUtil.get("https://api.voteright.fr/communities/"+communityId+"/proposals/formatted?period=2024");
+            String response = HttpUtil.get("https://api.voteright.fr/communities/"+communityId+"/proposals/formatted?period=2025");
             return convertJsonToProposals(response);
         }catch (Exception e){
             e.printStackTrace();

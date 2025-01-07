@@ -39,7 +39,7 @@ public class CommunityController {
 
     public Community getBudget(Community community){
         try{
-            String response = HttpUtil.get("https://api.voteright.fr/communities/"+community.getId()+"/budget?period=2024");
+            String response = HttpUtil.get("https://api.voteright.fr/communities/"+community.getId()+"/budget?period=2025");
             Gson gson = new Gson();
             Community cmy = gson.fromJson(response, Community.class);
             community.setThemes(cmy.getThemes());

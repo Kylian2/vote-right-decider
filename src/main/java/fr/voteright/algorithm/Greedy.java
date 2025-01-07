@@ -199,7 +199,7 @@ public class Greedy {
         cmy.getThemes().get(validProposals.get(best).getTheme()-1).useBudget(validProposals.get(best).getBudget());
         validProposals.remove(best);
         if(!validProposals.isEmpty()){
-            selectedProposals.setTail(maximizeTotalSatisfaction(validProposals, cmy));
+            selectedProposals.setTail(maximizeTotalSatisfactionRatio(validProposals, cmy));
         }
 
         return selectedProposals;
