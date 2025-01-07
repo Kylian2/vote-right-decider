@@ -81,6 +81,8 @@ public class ThemeBudgetEditorView extends View implements ParametrizedView{
         }
         JScrollPane scrollPane = new JScrollPane(scrollablePanel);
         scrollPane.setPreferredSize(new Dimension(550, 360));
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
         leftPanel.add(scrollPane);
 
