@@ -6,11 +6,14 @@ import fr.voteright.controller.ProposalController;
 import fr.voteright.model.Community;
 import fr.voteright.model.Proposal;
 
+import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class CommunityView extends View implements ParametrizedView{
 
@@ -161,6 +164,15 @@ public class CommunityView extends View implements ParametrizedView{
             JPanel proposalPanel = getProposalPanel(p);
             proposalsPanel.add(proposalPanel);
             proposalsPanel.add(Box.createVerticalStrut(10));
+            int finalI = p.getId();
+            proposalPanel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    HashMap<String, Object> params = new HashMap<>();
+                    params.put("proposal", finalI);
+                    navigationManager.showView("proposal", params);
+                }
+            });
         }
         if(proposals.isEmpty()) {
             JLabel message = new JLabel("Il n'y a aucune proposition en attente d'acceptation");
