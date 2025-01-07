@@ -8,6 +8,7 @@ import fr.voteright.model.Proposal;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.*;
 
@@ -42,7 +43,7 @@ public class CommunityView extends View implements ParametrizedView{
         totalBudgetPanel.setBackground(Color.lightGray);
         totalBudgetPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 0, 0));
         totalBudgetPanel.setLayout(new BoxLayout(totalBudgetPanel, BoxLayout.Y_AXIS));
-        JLabel totalBudgetLabel = new JLabel("Budget Total :");
+        JLabel totalBudgetLabel = new JLabel("Budget total :");
         JLabel totalBudget = new JLabel(community.getBudget()+" €");
         totalBudget.setFont(new Font("Arial", Font.PLAIN, 20));
         totalBudget.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
@@ -61,6 +62,31 @@ public class CommunityView extends View implements ParametrizedView{
         usedBudgetLabel.setFont(new Font("Arial", Font.BOLD, 22));
         usedBudgetPanel.add(usedBudgetLabel);
         usedBudgetPanel.add(usedBudget);
+
+        JPanel fixedFeesPanel = new JPanel();
+        fixedFeesPanel.setBackground(Color.lightGray);
+        fixedFeesPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 0, 0));
+        fixedFeesPanel.setLayout(new BoxLayout(fixedFeesPanel, BoxLayout.Y_AXIS));
+        JLabel fixedFeesLabel = new JLabel("Frais fixes :");
+        JLabel fixedFees = new JLabel(community.getFixedFees()+" €");
+        fixedFees.setFont(new Font("Arial", Font.PLAIN, 20));
+        fixedFees.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        fixedFeesLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        fixedFeesPanel.add(fixedFeesLabel);
+        fixedFeesPanel.add(fixedFees);
+
+        JButton edit = new JButton("Modifier");
+        edit.setPreferredSize(new Dimension(90, 30));
+        edit.setFont(new Font("Arial", Font.PLAIN, 15));
+        HashMap<String, Object> paramEditBudget = new HashMap<>();
+        paramEditBudget.put("themeBudgetEditor", community.getId());
+        edit.addActionListener(e -> navigationManager.showView("themeBudgetEditor", paramEditBudget));
+
+        JPanel editPanel = new JPanel();
+        editPanel.setBackground(Color.lightGray);
+        editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
+        editPanel.setBorder(BorderFactory.createEmptyBorder(250, 100, 0, 0));
+        editPanel.add(edit);
 
         JPanel content = new JPanel(new BorderLayout());
         content.setBackground(Color.WHITE);
@@ -98,6 +124,8 @@ public class CommunityView extends View implements ParametrizedView{
 
         leftSide.add(totalBudgetPanel);
         leftSide.add(usedBudgetPanel);
+        leftSide.add(fixedFeesPanel);
+        leftSide.add(editPanel);
 
         content.add(titlePanel, BorderLayout.NORTH);
         content.add(scrollPane, BorderLayout.CENTER);

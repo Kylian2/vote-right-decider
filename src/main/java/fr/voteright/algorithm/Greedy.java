@@ -118,7 +118,7 @@ public class Greedy {
         ArrayList<Proposal> validProposals = new ArrayList<Proposal>();
         for (Proposal proposal : proposals) {
             int themeIndex = proposal.getTheme() - 1;
-            int availableBudget = cmy.getThemes().get(themeIndex).getBudget() - cmy.getThemes().get(themeIndex).getUsedBudget();
+            float availableBudget = cmy.getThemes().get(themeIndex).getBudget() - cmy.getThemes().get(themeIndex).getUsedBudget();
             if (proposal.getBudget() <= availableBudget) {
                 validProposals.add(proposal);
             }
@@ -173,7 +173,7 @@ public class Greedy {
         ArrayList<Proposal> validProposals = new ArrayList<Proposal>();
         for (Proposal proposal : proposals) {
             int themeIndex = proposal.getTheme() - 1;
-            int availableBudget = cmy.getThemes().get(themeIndex).getBudget() - cmy.getThemes().get(themeIndex).getUsedBudget();
+            float availableBudget = cmy.getThemes().get(themeIndex).getBudget() - cmy.getThemes().get(themeIndex).getUsedBudget();
             if (proposal.getBudget() <= availableBudget) {
                 validProposals.add(proposal);
             }
