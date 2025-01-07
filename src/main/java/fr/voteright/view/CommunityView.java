@@ -82,9 +82,10 @@ public class CommunityView extends View implements ParametrizedView{
         paramEditBudget.put("themeBudgetEditor", community.getId());
         edit.addActionListener(e -> navigationManager.showView("themeBudgetEditor", paramEditBudget));
 
-        JPanel editPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel editPanel = new JPanel();
         editPanel.setBackground(Color.lightGray);
-        editPanel.setBorder(BorderFactory.createEmptyBorder(300, 0, 0, 0));
+        editPanel.setLayout(new BoxLayout(editPanel, BoxLayout.Y_AXIS));
+        editPanel.setBorder(BorderFactory.createEmptyBorder(250, 100, 0, 0));
         editPanel.add(edit);
 
         JPanel content = new JPanel(new BorderLayout());
