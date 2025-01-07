@@ -44,6 +44,7 @@ public class ProposalController {
             String description = json1.get("PRO_description_TXT").getAsString();
             int budget = json1.get("PRO_budget_NB").getAsInt();
             String theme = json1.get("PRO_theme_VC").getAsString();
+            int idCommunity = json1.get("PRO_community_NB").getAsInt();
 
             String response2 = HttpUtil.get("https://api.voteright.fr/proposals/" + proposalId + "/reactions");
             JsonObject json2 = JsonParser.parseString(response2).getAsJsonObject();
@@ -56,7 +57,7 @@ public class ProposalController {
             int totalReactions = nblove + nblike + nbdislike + nbhate;
             int satisfactionPercentage = (int) (((double) (nblove + nblike) / totalReactions) * 100);
 
-            return new Proposal(id, title, description, satisfactionPercentage, budget, theme);
+            return new Proposal(id, title, description, satisfactionPercentage, budget, theme, idCommunity);
         }catch (Exception e){
             e.printStackTrace();
             return null;

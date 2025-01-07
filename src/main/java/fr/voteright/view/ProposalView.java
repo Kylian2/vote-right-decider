@@ -5,9 +5,11 @@ import fr.voteright.controller.ProposalController;
 import fr.voteright.model.Proposal;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ProposalView extends View implements ParametrizedView{
@@ -32,14 +34,16 @@ public class ProposalView extends View implements ParametrizedView{
         add(main, BorderLayout.CENTER);
 
         JLabel title = new JLabel(proposal.getTitle());
-        title.setFont(new Font("Arial", Font.BOLD, 30));
+        title.setBorder(new EmptyBorder(10, 0, 0, 0));
+        title.setFont(new Font("Arial", Font.BOLD, 36));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         main.add(Box.createRigidArea(new Dimension(0, 20)));
         main.add(title);
 
         main.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        JPanel centerPanel = new JPanel(new GridLayout(1, 2, 20, 0)); // Deux colonnes
+        JPanel centerPanel = new JPanel(new GridLayout(1, 2, 20, 0));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(10, 40, 0, 0));
         centerPanel.setBackground(Color.WHITE);
 
         JTextArea description = new JTextArea(proposal.getDescription());
@@ -50,15 +54,24 @@ public class ProposalView extends View implements ParametrizedView{
         description.setFont(new Font("Arial", Font.PLAIN, 20));
         centerPanel.add(description);
 
-        JPanel statsPanel = new JPanel(new GridLayout(2, 2, 10, 10));
+        JPanel statsPanel = new JPanel(new GridLayout(2,2));
+        statsPanel.setBackground(Color.WHITE);
         JLabel likeLabel = new JLabel("Pourcentage de j'aime :");
-        likeLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        likeLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        JLabel valueLikeLabel = new JLabel(proposal.getSatisfaction()+ "%");
+        valueLikeLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+
         statsPanel.add(likeLabel);
-        statsPanel.add(new JLabel(proposal.getSatisfaction()+ "%"));
-        JLabel voteLabel = new JLabel("Thème de la proposition :");
-        voteLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        statsPanel.add(voteLabel);
-        statsPanel.add(new JLabel(proposal.getThemeTextuel()+ "%"));
+        statsPanel.add(valueLikeLabel);
+
+        JLabel themeLabel = new JLabel("Thème de la proposition :");
+        themeLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        JLabel themeNameLabel = new JLabel(proposal.getThemeTextuel());
+        themeNameLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+
+        statsPanel.add(themeLabel);
+        statsPanel.add(themeNameLabel);
+
         centerPanel.add(statsPanel);
 
         main.add(centerPanel);
@@ -66,8 +79,10 @@ public class ProposalView extends View implements ParametrizedView{
         main.add(Box.createRigidArea(new Dimension(0, 20)));
 
         JPanel budgetPanel = new JPanel(new GridLayout(1, 2, 0, 0));
+        budgetPanel.setBorder(BorderFactory.createEmptyBorder(0, 40, 0, 0));
+        budgetPanel.setBackground(Color.WHITE);
         JLabel budget = new JLabel("Budget de la proposition : " + proposal.getBudget() + " €");
-        budget.setFont(new Font("Arial", Font.BOLD, 20));
+        budget.setFont(new Font("Arial", Font.BOLD, 24));
         budget.setAlignmentX(Component.LEFT_ALIGNMENT);
         budget.setAlignmentY(Component.TOP_ALIGNMENT);
         budgetPanel.add(budget);
@@ -77,6 +92,7 @@ public class ProposalView extends View implements ParametrizedView{
         main.add(Box.createRigidArea(new Dimension(0, 60)));
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 40));
         buttonPanel.setBackground(Color.WHITE);
         JButton returnButton = new JButton("Retour");
         returnButton.setPreferredSize(new Dimension(150, 50));
@@ -86,41 +102,36 @@ public class ProposalView extends View implements ParametrizedView{
         buttonPanel.add(validateButton);
         main.add(buttonPanel);
 
-        returnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                navigationManager.showView("community");
-            }
-        });
+        returnButton.addActionListener(e->navigationManager.showView("community"));
 
-        validateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int result = JOptionPane.showConfirmDialog(
-                        ProposalView.this,
-                        "Êtes-vous sûr de vouloir valider cette proposition ?\nCette action sera irréversible.",
-                        "Confirmation",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.WARNING_MESSAGE
-                );
+        validateButton.addActionListener(e-> {
+            int result = JOptionPane.showConfirmDialog(
+                    ProposalView.this,
+                    "Êtes-vous sûr de vouloir valider cette proposition ?\nCette action sera irréversible.",
+                    "Confirmation",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
 
-                if (result == JOptionPane.YES_OPTION) {
-                    boolean success = proposalController.validateProposal(id);
-                    if (success) {
-                        JOptionPane.showMessageDialog(
-                                ProposalView.this,
-                                "Proposition validée !",
-                                "Succès",
-                                JOptionPane.INFORMATION_MESSAGE
-                        );
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                ProposalView.this,
-                                "Erreur lors de la validation de la proposition.",
-                                "Erreur",
-                                JOptionPane.ERROR_MESSAGE
-                        );
-                    }
+            if (result == JOptionPane.YES_OPTION) {
+                boolean success = proposalController.validateProposal(id);
+                if (success) {
+                    JOptionPane.showMessageDialog(
+                            ProposalView.this,
+                            "Proposition validée !",
+                            "Succès",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                    HashMap<String, Object> params = new HashMap<>();
+                    params.put("community", proposal.getCommunityId());
+                    navigationManager.showView("community", params);
+                } else {
+                    JOptionPane.showMessageDialog(
+                            ProposalView.this,
+                            "Erreur lors de la validation de la proposition.",
+                            "Erreur",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
         });

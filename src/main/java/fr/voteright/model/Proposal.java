@@ -27,18 +27,22 @@ public class Proposal {
     @SerializedName("PRO_theme_NB")
     private int theme;
 
+    @SerializedName("PRO_community_NB")
+    private int idCommunity;
+
     private Vote vote;
     private Reaction reaction;
 
     // Constructeur, getters et setters
 
-    public Proposal(int id, String title, String description, int satisfactionPercentage, int budget, String themeTextuel) {
+    public Proposal(int id, String title, String description, int satisfactionPercentage, int budget, String themeTextuel, int idCommunity) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.satisfactionPercentage = satisfactionPercentage;
         this.budget = budget;
         this.themeTextuel = themeTextuel;
+        this.idCommunity = idCommunity;
     }
 
     public Proposal(int id, String title, int budget, Vote vote, Reaction reaction) {
@@ -111,6 +115,10 @@ public class Proposal {
 
     public Vote getVote() {
         return vote;
+    }
+
+    public int getCommunityId() {
+        return idCommunity;
     }
 
     /**
