@@ -87,7 +87,7 @@ public class BruteForce {
         ArrayList<Proposal> validProposals = new ArrayList<>();
         for (Proposal proposal : proposals) {
             int themeIndex = proposal.getTheme() - 1;
-            int availableBudget = community.getThemes().get(themeIndex).getBudget() - community.getThemes().get(themeIndex).getUsedBudget();
+            float availableBudget = community.getThemes().get(themeIndex).getBudget() - community.getThemes().get(themeIndex).getUsedBudget();
             if (proposal.getBudget() <= availableBudget) {
                 validProposals.add(proposal);
             }
@@ -129,7 +129,7 @@ public class BruteForce {
         ArrayList<Proposal> validProposals = new ArrayList<>();
         for (Proposal proposal : proposals) {
             int themeIndex = proposal.getTheme() - 1;
-            int availableBudget = community.getThemes().get(themeIndex).getBudget() - community.getThemes().get(themeIndex).getUsedBudget();
+            float availableBudget = community.getThemes().get(themeIndex).getBudget() - community.getThemes().get(themeIndex).getUsedBudget();
             if (proposal.getBudget() <= availableBudget) {
                 validProposals.add(proposal);
             }

@@ -24,6 +24,7 @@ public class NavigationManager {
         addView("communities", new CommunitiesView(this));
         addView("community", new CommunityView(this));
         addView("proposal", new ProposalView(this));
+        addView("themeBudgetEditor", new ThemeBudgetEditorView(this));
 
         // Ajout du panel contenant toutes les vues au frame
         frame.add(containerPanel, BorderLayout.CENTER);

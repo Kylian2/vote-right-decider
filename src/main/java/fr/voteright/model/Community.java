@@ -28,13 +28,13 @@ public class Community {
     private int numberOfMembers;
 
     @SerializedName("CMY_budget_NB")
-    private int budget;
+    private float budget;
 
     @SerializedName("CMY_used_budget_NB")
-    private int usedBudget;
+    private float usedBudget;
 
     @SerializedName("CMY_fixed_fees_NB")
-    private int fixedFees;
+    private float fixedFees;
 
     @SerializedName("CMY_budget_theme_NB")
     private ArrayList<Theme> themes;
@@ -49,7 +49,7 @@ public class Community {
         this.numberOfMembers = numberOfMembers;
     }
 
-    public Community(int budget, ArrayList<Theme> themes, int fixedFees, int nbMembers) {
+    public Community(float budget, ArrayList<Theme> themes, float fixedFees, int nbMembers) {
         this.budget = budget;
         this.usedBudget = 0;
         this.fixedFees = fixedFees;
@@ -126,15 +126,15 @@ public class Community {
         return numberOfMembers;
     }
 
-    public int getBudget() {
+    public float getBudget() {
         return budget;
     }
 
-    public int getUsedBudget() {
+    public float getUsedBudget() {
         return usedBudget;
     }
 
-    public int getFixedFees() {
+    public float getFixedFees() {
         return fixedFees;
     }
 
@@ -149,11 +149,15 @@ public class Community {
         }
     }
 
-    public void setUsedBudget(int usedBudget) {
+    public void setUsedBudget(float usedBudget) {
         this.usedBudget = usedBudget;
     }
 
-    public void setBudget(int budget) {
+    public void setBudget(float budget) {
         this.budget = budget;
+    }
+
+    public void setFixedFees(float fixedFees) {
+        this.fixedFees = fixedFees;
     }
 }

@@ -8,6 +8,8 @@ import fr.voteright.model.Proposal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+
 
 public class CommunityController {
 
@@ -43,6 +45,7 @@ public class CommunityController {
             community.setThemes(cmy.getThemes());
             community.setBudget(cmy.getBudget());
             community.setUsedBudget(cmy.getUsedBudget());
+            community.setFixedFees(cmy.getFixedFees());
             return community;
         }catch (Exception e){
             e.printStackTrace();
@@ -50,4 +53,19 @@ public class CommunityController {
         }
     }
 
+    public boolean patchBudget(Community community, HashMap<Integer, Double> body) {
+        try{
+            Gson gson = new Gson();
+            String jsonBody = gson.toJson(body);
+            String response = HttpUtil.patch("https://api.voteright.fr/communities/"+community.getId()+"/budget?period=2024", jsonBody);
+            if(response.equals("true")){
+                return true;
+            } else {
+                return false;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
