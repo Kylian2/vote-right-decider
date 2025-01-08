@@ -36,7 +36,7 @@ public class Theme {
     }
 
     public void useBudget(float amount){
-        if(amount <= budget){
+        if(amount + usedBudget <= budget){
             this.usedBudget += amount;
         }
     }

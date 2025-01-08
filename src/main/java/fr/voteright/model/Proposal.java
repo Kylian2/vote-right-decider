@@ -152,4 +152,23 @@ public class Proposal {
 
         return likeCount;
     }
+
+    /**
+     * Détermine la liste des utilisateurs satisfaits en fonction des votes positifs,
+     * négatifs et des réactions de like. Un utilisateur est considéré comme satisfait
+     * s'il a exprimé un vote positif ou a réagi positivement (en likant) sans avoir
+     * exprimé un vote négatif.
+     *
+     * @return L'ArrayList contenant les utilisateurs satisfaits.
+     */
+    public ArrayList<Integer> getSatisfiedUsers() {
+        ArrayList<Integer> satisfiedUsers = vote.getPositive();
+
+        for(int i = 0; i < reaction.getLike().size(); i++){
+            if(!vote.getNegative().contains(reaction.getLike().get(i)) && !vote.getPositive().contains(reaction.getLike().get(i))){
+                satisfiedUsers.add(reaction.getLike().get(i));
+            }
+        }
+        return satisfiedUsers;
+    }
 }

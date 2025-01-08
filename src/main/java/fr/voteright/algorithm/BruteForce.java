@@ -62,6 +62,21 @@ public class BruteForce {
         }else{
             System.out.println("ERROR -- BRUTE FORCE MAXIMISE TOTAL SATISFACTION -- TEST FAILED 0 EXPECTED, OBTAINED " + totalSatisfaction(maximiseTotalSatisfaction.toArrayList()));
         }
+
+        List<Proposal> minimizeBudget = bruteForce.minimizeBudget(proposals, community);
+        try{
+            bruteForce.minimizeBudget(new ArrayList<>(), community);
+            System.out.println("ERROR -- BRUTE FORCE MINIMIZE BUDGET -- EXCEPTION EXPECTED BECAUSE OF EMPTY LIST");
+        }catch (Exception e){
+            System.out.println("OK -- BRUTE FORCE MINIMIZE BUDGET -- TEST PASSED");
+        }
+
+        try{
+            bruteForce.minimizeBudget(new ArrayList<>(), null);
+            System.out.println("ERROR -- BRUTE FORCE MINIMIZE BUDGET -- EXCEPTION EXPECTED BECAUSE OF INVALID COMMUNITY");
+        }catch (Exception e){
+            System.out.println("OK -- BRUTE FORCE MINIMIZE BUDGET -- TEST PASSED");
+        }
     }
 
     /**
@@ -195,5 +210,126 @@ public class BruteForce {
             totalSatisfaction += p.satisfiedUser();
         }
         return totalSatisfaction;
+    }
+
+    /**
+     * @author Mathieu GUIBORAT--BOST
+     * Optimise la sélection des propositions pour minimiser le budget, tout en garantissant que
+     * chaque utilisateur a au moins un vote satisfait. Utilise une approche avec mémoïsation
+     * pour éviter le recalcul des sous-problèmes déjà résolus.
+     *
+     * @param proposals La liste des propositions à examiner.
+     * @param community La communauté avec ses membres, ses budgets thématiques et ses informations associées.
+     * @return Une liste chaînée contenant les propositions sélectionnées pour maximiser la satisfaction.
+     * @throws Exception Si la liste des propositions est vide, si la communauté est null,
+     *                   ou si ses thèmes sont invalides ou vides.
+     */
+    public List<Proposal> minimizeBudget(ArrayList<Proposal> proposals, Community community) throws Exception {
+        if (proposals.isEmpty()) {
+            throw new Exception("Une liste de proposition non vide est attendue");
+        }
+        if (community == null || community.getThemes() == null || community.getThemes().isEmpty()) {
+            throw new Exception("La communauté est null ou contient un élément invalide");
+        }
+
+        // Garde uniquement les propositions valides (respectent le budget)
+        ArrayList<Proposal> validProposals = new ArrayList<>();
+        for (Proposal proposal : proposals) {
+            int themeIndex = proposal.getTheme() - 1;
+            float availableBudget = community.getThemes().get(themeIndex).getBudget() - community.getThemes().get(themeIndex).getUsedBudget();
+            if (proposal.getBudget() <= availableBudget) {
+                validProposals.add(proposal);
+            }
+        }
+        if (validProposals.isEmpty()) {
+            return new List<>(null); // Retourne une liste vide si aucune proposition n'est valide
+        }
+
+        // Mémoïsation pour éviter de recalculer les mêmes sous-problèmes
+        Map<String, List<Proposal>> memoizationCache = new HashMap<>();
+        return minimizeBudgetWithMemoization(validProposals, community, memoizationCache);
+    }
+
+    /**
+     * @author Mathieu GUIBORAT--BOST
+     * Fonction auxiliaire récursive utilisant la mémoïsation pour minimiser le budget, tout en garantissant que
+     * chaque utilisateur a au moins un vote satisfait.
+     * Elle vérifie d'abord dans le cache si une solution équivalente a déjà été calculée, et si oui,
+     * elle la retourne directement. Sinon, elle calcule récursivement la meilleure solution possible.
+     *
+     * @param proposals La liste des propositions valides restantes.
+     * @param community Une instance de la communauté représentant l'état courant des budgets thématiques.
+     * @param cache Une map de mémoïsation associant un état de la communauté et des propositions restantes
+     *              à une solution optimisée.
+     * @return Une liste chaînée contenant les propositions sélectionnées pour cette branche de calcul.
+     */
+    private List<Proposal> minimizeBudgetWithMemoization(ArrayList<Proposal> proposals, Community community, Map<String, List<Proposal>> cache) {
+        // Vérifier si une proposition semblable n'a pas déjà été trouvée
+        String communityState = generateKey(community.getId(), proposals);
+        if (cache.containsKey(communityState)) {
+            return cache.get(communityState);
+        }
+
+        // Si aucune proposition n'est restante, retourner une liste vide
+        if (proposals.isEmpty()) {
+            cache.put(communityState, new List<>(null)); //mémoriser le résultat
+            return new List<>(null);
+        }
+
+        // Garde uniquement les propositions valides (respectent le budget)
+        ArrayList<Proposal> validProposals = new ArrayList<>();
+        for (Proposal proposal : proposals) {
+            int themeIndex = proposal.getTheme() - 1;
+            float availableBudget = community.getThemes().get(themeIndex).getBudget() - community.getThemes().get(themeIndex).getUsedBudget();
+            if (proposal.getBudget() <= availableBudget) {
+                validProposals.add(proposal);
+            }
+        }
+        if (validProposals.isEmpty()) {
+            return new List<>(null); // Retourne une liste vide si aucune proposition n'est valide
+        }
+
+        List<Proposal> best = null;
+        float minimumBudget = community.getBudget() + 1;
+
+        for (int i = 0; i < validProposals.size(); i++) {
+            Proposal currentProposal = validProposals.get(i);
+
+            // Créer une copie indépendante de la communauté pour éviter les problemes d'adressage
+            Community newCommunity = new Community(community);
+            newCommunity.getThemes().get(currentProposal.getTheme() - 1).useBudget(currentProposal.getBudget());
+            newCommunity.useBudget(currentProposal.getBudget());
+
+            // Créer une nouvelle liste des propositions restantes pour eviter les problèmes d'adressage
+            ArrayList<Proposal> remainingProposals = new ArrayList<>(validProposals);
+            remainingProposals.remove(i);
+
+            List<Proposal> currentSolution = new List<>(currentProposal);
+            currentSolution.setTail(minimizeBudgetWithMemoization(remainingProposals, newCommunity, cache));
+
+            if (everyUserHasAtLeastOneSatisfiedVote(currentSolution.toArrayList(), newCommunity.getNumberOfMembers()) && newCommunity.getUsedBudget() < minimumBudget) {
+                minimumBudget = newCommunity.getUsedBudget();
+                best = currentSolution;
+            }
+        }
+
+        // Mémoriser le résultat
+        cache.put(communityState, best);
+        return best;
+    }
+
+    public static boolean everyUserHasAtLeastOneSatisfiedVote (ArrayList<Proposal> proposals, int numberOfMembers) {
+        ArrayList<Integer> satisfiedUsers = new ArrayList<>();
+        for(Proposal p : proposals){
+            for(Integer userId : p.getSatisfiedUsers()){
+                if(!satisfiedUsers.contains(userId)){
+                    satisfiedUsers.add(userId);
+                    if(numberOfMembers == satisfiedUsers.size()){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

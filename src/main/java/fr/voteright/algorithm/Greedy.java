@@ -213,4 +213,89 @@ public class Greedy {
         return totalSatisfaction;
     }
 
+    /**
+     * @author Mathieu GUIBORAT--BOST
+     * Optimise la sélection des propositions pour minimiser le budget, tout en garantissant que
+     * chaque utilisateur a au moins un vote satisfait.
+     * Sélectionne à chaque itération de la fonction la proposition avec le budget le plus bas.
+     * Retourne une liste chaînée des propositions sélectionnées.
+     *
+     * @param proposals La liste des propositions à examiner.
+     * @param community La communauté avec ses membres et ses budgets thématiques.
+     * @return Une liste chaînée contenant les propositions sélectionnées pour minimiser le budget. Si aucune n'est selectionnée l'element data de la liste sera null.
+     * @throws Exception Si la liste des propositions est vide ou si la communauté est null.
+     */
+    public List<Proposal> minimizeBudget(ArrayList<Proposal> proposals, Community community, ArrayList<Integer> satisfiedUsers, int numberOfMembers) throws Exception {
+        if(proposals.isEmpty()){
+            throw new Exception("Une liste de proposition non vide est attendue");
+        }
+        if(community == null || community.getThemes() == null || community.getThemes().isEmpty()){
+            throw new Exception("La communauté est null ou contient un element invalide");
+        }
+        Community cmy = new Community(community); //pour ne pas modifier la liste en paramètre
+
+
+        //Création d'une liste de proposition respectant les contraintes budgétaires
+        ArrayList<Proposal> validProposals = new ArrayList<Proposal>();
+        for (Proposal proposal : proposals) {
+            int themeIndex = proposal.getTheme() - 1;
+            float availableBudget = cmy.getThemes().get(themeIndex).getBudget() - cmy.getThemes().get(themeIndex).getUsedBudget();
+            if (proposal.getBudget() <= availableBudget) {
+                validProposals.add(proposal);
+            }
+        }
+        if (validProposals.isEmpty()) {
+            return new List<>(null);
+        }
+
+        //Selection de la proposition avec le budget le plus bas
+        List<Proposal> selectedProposals = new List<>(null);
+        int best = 0;
+        float minimumBudget = community.getBudget() + 1;
+
+        for (int i = 0; i < validProposals.size(); i++) {
+            float budget = validProposals.get(i).getBudget();
+            if(budget < minimumBudget){
+                minimumBudget = budget;
+                best = i;
+            }
+        }
+
+        Proposal bestProposal = validProposals.get(best);
+
+        for (Integer userId : bestProposal.getSatisfiedUsers()){
+            if(!satisfiedUsers.contains(userId)){
+                satisfiedUsers.add(userId);
+            }
+        }
+
+        if(numberOfMembers == satisfiedUsers.size()){
+            return selectedProposals;
+        }
+
+        selectedProposals.setData(bestProposal);
+        cmy.getThemes().get(bestProposal.getTheme()-1).useBudget(bestProposal.getBudget());
+        validProposals.remove(best);
+        if(!validProposals.isEmpty()){
+            selectedProposals.setTail(minimizeBudget(validProposals, cmy, satisfiedUsers, numberOfMembers));
+        }
+
+        return selectedProposals;
+    }
+
+    public static boolean everyUserHasAtLeastOneSatisfiedVote (ArrayList<Proposal> proposals, int numberOfMembers) {
+        ArrayList<Integer> satisfiedUsers = new ArrayList<>();
+        for(Proposal p : proposals){
+            for(Integer userId : p.getSatisfiedUsers()){
+                if(!satisfiedUsers.contains(userId)){
+                    satisfiedUsers.add(userId);
+                    if(numberOfMembers == satisfiedUsers.size()){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
 }

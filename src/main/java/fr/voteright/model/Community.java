@@ -12,15 +12,6 @@ public class Community {
     @SerializedName("CMY_name_VC")
     private String name;
 
-    @SerializedName("CMY_image_VC")
-    private String image;
-
-    @SerializedName("CMY_emoji_VC")
-    private String emoji;
-
-    @SerializedName("CMY_color_VC")
-    private String color;
-
     @SerializedName("CMY_description_TXT")
     private String description;
 
@@ -39,12 +30,9 @@ public class Community {
     @SerializedName("CMY_budget_theme_NB")
     private ArrayList<Theme> themes;
 
-    public Community(int id, String name, String image, String emoji, String color, String description, int numberOfMembers) {
+    public Community(int id, String name, String description, int numberOfMembers) {
         this.id = id;
         this.name = name;
-        this.image = image;
-        this.emoji = emoji;
-        this.color = color;
         this.description = description;
         this.numberOfMembers = numberOfMembers;
     }
@@ -60,9 +48,6 @@ public class Community {
     public Community(Community community) {
         this.id = community.getId();
         this.name = community.getName();
-        this.image = community.getImage();
-        this.emoji = community.getEmoji();
-        this.color = community.getColor();
         this.description = community.getDescription();
         this.numberOfMembers = community.getNumberOfMembers();
         this.budget = community.getBudget();
@@ -88,30 +73,6 @@ public class Community {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getEmoji() {
-        return emoji;
-    }
-
-    public void setEmoji(String emoji) {
-        this.emoji = emoji;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     public String getDescription() {
@@ -159,5 +120,11 @@ public class Community {
 
     public void setFixedFees(float fixedFees) {
         this.fixedFees = fixedFees;
+    }
+
+    public void useBudget(float amount){
+        if(amount + usedBudget <= budget){
+            this.usedBudget += amount;
+        }
     }
 }
