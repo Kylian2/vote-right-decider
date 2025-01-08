@@ -12,6 +12,9 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author estebanrodriguez
+ */
 public class ProposalView extends View implements ParametrizedView{
 
     private int id;

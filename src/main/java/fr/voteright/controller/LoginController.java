@@ -1,8 +1,10 @@
 package fr.voteright.controller;
 
 import com.google.gson.*;
-import fr.voteright.model.User;
 
+/**
+ * @author kylianrichard
+ */
 public class LoginController {
 
     public boolean login(String email, String password){

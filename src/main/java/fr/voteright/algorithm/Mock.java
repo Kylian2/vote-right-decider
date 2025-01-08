@@ -24,6 +24,7 @@ import java.util.ArrayList;
  * - La conversion des données JSON en objets Java.
  *
  * Cette classe est utile pour des scénarios de tests ou de simulations des algorithmes de rcommendation.
+ * @author kylianrichard 
  */
 public class Mock {
 

@@ -6,7 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * @author kylianrichard
+ */
 public class NavigationManager {
     private final CardLayout cardLayout;
     private final JPanel containerPanel;

@@ -8,6 +8,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * @author kylianrichard
+ */
 public class Header extends JPanel {
 
     private NavigationManager navigationManager;

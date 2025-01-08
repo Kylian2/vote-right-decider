@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import static fr.voteright.algorithm.Mock.convertJsonToProposals;
 
 public class ProposalController {
-
+    /**
+     * @author kylianrichard
+     */
     public ArrayList<Proposal> getProposalsOf(int communityId){
         try{
             String response = HttpUtil.get("https://api.voteright.fr/communities/"+communityId+"/proposals/formatted?period=2025");
@@ -22,7 +24,9 @@ public class ProposalController {
             return null;
         }
     }
-
+    /**
+     * @author kylianrichard
+     */
     public ArrayList<Proposal> orderBy(ArrayList<Proposal> proposals, Community community, int criteria) throws Exception {
         Greedy greedy = new Greedy();
         BruteForce bruteForce = new BruteForce();
@@ -36,6 +40,9 @@ public class ProposalController {
         };
     }
 
+    /**
+     * @author estebanrodriguez
+     */
     public Proposal getProposal(int proposalId){
         try{
             String response1 = HttpUtil.get("https://api.voteright.fr/proposals/" + proposalId);
@@ -65,7 +72,9 @@ public class ProposalController {
             return null;
         }
     }
-
+    /**
+     * @author estebanrodriguez
+     */
     public boolean validateProposal(int proposalId) {
         try {
             JsonObject requestBody = new JsonObject();

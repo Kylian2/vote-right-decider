@@ -14,6 +14,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * @author mathieuguiborat
+ */
 public class ThemeBudgetEditorView extends View implements ParametrizedView{
     private int id;
     private NavigationManager navigationManager;

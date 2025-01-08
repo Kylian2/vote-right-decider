@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-
 public class CommunityController {
-
+    /**
+     * @author kylianrichard
+     */
     public ArrayList<Community> getCommunities(){
         try{
             String response = HttpUtil.get("https://api.voteright.fr/communities/managed?role=decider");
@@ -24,7 +25,9 @@ public class CommunityController {
             return null;
         }
     }
-
+    /**
+     * @author kylianrichard
+     */
     public Community getCommunity(int id){
         try{
             String response = HttpUtil.get("https://api.voteright.fr/communities/"+id);
@@ -36,7 +39,9 @@ public class CommunityController {
             return null;
         }
     }
-
+    /**
+     * @author kylianrichard
+     */
     public Community getBudget(Community community){
         try{
             String response = HttpUtil.get("https://api.voteright.fr/communities/"+community.getId()+"/budget?period=2025");
@@ -52,7 +57,9 @@ public class CommunityController {
             return null;
         }
     }
-
+    /**
+     * @author mathieuguiborat
+     */
     public boolean patchBudget(Community community, HashMap<Integer, Double> body) {
         try{
             Gson gson = new Gson();

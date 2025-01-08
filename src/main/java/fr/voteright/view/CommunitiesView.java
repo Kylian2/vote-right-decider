@@ -12,6 +12,9 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * @author kylianrichard
+ */
 public class CommunitiesView extends View{
 
     private NavigationManager navigationManager;

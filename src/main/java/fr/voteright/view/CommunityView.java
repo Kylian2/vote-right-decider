@@ -15,6 +15,9 @@ import java.util.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * @author kylianrichard
+ */
 public class CommunityView extends View implements ParametrizedView{
 
     private int id;
