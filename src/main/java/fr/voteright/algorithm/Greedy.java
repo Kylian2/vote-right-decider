@@ -91,7 +91,6 @@ public class Greedy {
         }else{
             System.out.println("ERROR -- GREEDY MAXIMISE TOTAL SATISFACTION RATIO -- TEST FAILED 0 EXPECTED, OBTAINED " + totalSatisfaction(p.toArrayList()));
         }
-
     }
 
     /**
@@ -222,10 +221,11 @@ public class Greedy {
      *
      * @param proposals La liste des propositions à examiner.
      * @param community La communauté avec ses membres et ses budgets thématiques.
+     * @param satisfiedUsers Un ArrayList contenant les identifiants des utilisateurs satisfaits
      * @return Une liste chaînée contenant les propositions sélectionnées pour minimiser le budget. Si aucune n'est selectionnée l'element data de la liste sera null.
      * @throws Exception Si la liste des propositions est vide ou si la communauté est null.
      */
-    public List<Proposal> minimizeBudget(ArrayList<Proposal> proposals, Community community, ArrayList<Integer> satisfiedUsers, int numberOfMembers) throws Exception {
+    public List<Proposal> minimizeBudget(ArrayList<Proposal> proposals, Community community, ArrayList<Integer> satisfiedUsers) throws Exception {
         if(proposals.isEmpty()){
             throw new Exception("Une liste de proposition non vide est attendue");
         }
@@ -248,12 +248,11 @@ public class Greedy {
             return new List<>(null);
         }
 
-        //Selection de la proposition avec le budget le plus bas
-        List<Proposal> selectedProposals = new List<>(null);
+        // Selection de la proposition avec le budget le plus bas
         int best = 0;
-        float minimumBudget = community.getBudget() + 1;
+        float minimumBudget = validProposals.get(0).getBudget();
 
-        for (int i = 0; i < validProposals.size(); i++) {
+        for (int i = 1; i < validProposals.size(); i++) {
             float budget = validProposals.get(i).getBudget();
             if(budget < minimumBudget){
                 minimumBudget = budget;
@@ -262,40 +261,24 @@ public class Greedy {
         }
 
         Proposal bestProposal = validProposals.get(best);
+        List<Proposal> selectedProposals = new List<>(null);
+        selectedProposals.setData(bestProposal);
 
         for (Integer userId : bestProposal.getSatisfiedUsers()){
             if(!satisfiedUsers.contains(userId)){
                 satisfiedUsers.add(userId);
-            }
-        }
-
-        if(numberOfMembers == satisfiedUsers.size()){
-            return selectedProposals;
-        }
-
-        selectedProposals.setData(bestProposal);
-        cmy.getThemes().get(bestProposal.getTheme()-1).useBudget(bestProposal.getBudget());
-        validProposals.remove(best);
-        if(!validProposals.isEmpty()){
-            selectedProposals.setTail(minimizeBudget(validProposals, cmy, satisfiedUsers, numberOfMembers));
-        }
-
-        return selectedProposals;
-    }
-
-    public static boolean everyUserHasAtLeastOneSatisfiedVote (ArrayList<Proposal> proposals, int numberOfMembers) {
-        ArrayList<Integer> satisfiedUsers = new ArrayList<>();
-        for(Proposal p : proposals){
-            for(Integer userId : p.getSatisfiedUsers()){
-                if(!satisfiedUsers.contains(userId)){
-                    satisfiedUsers.add(userId);
-                    if(numberOfMembers == satisfiedUsers.size()){
-                        return true;
-                    }
+                if(community.getNumberOfMembers() == satisfiedUsers.size()){
+                    return selectedProposals;
                 }
             }
         }
-        return false;
-    }
 
+        cmy.getThemes().get(bestProposal.getTheme()-1).useBudget(bestProposal.getBudget());
+        validProposals.remove(best);
+        if(!validProposals.isEmpty()) {
+            selectedProposals.setTail(minimizeBudget(validProposals, cmy, satisfiedUsers));
+            return selectedProposals;
+        }
+        return new List<>(null);
+    }
 }

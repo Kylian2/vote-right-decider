@@ -1,6 +1,11 @@
 package fr.voteright.model;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
+import fr.voteright.utils.List;
 
 import java.util.ArrayList;
 
@@ -165,8 +170,9 @@ public class Proposal {
         ArrayList<Integer> satisfiedUsers = vote.getPositive();
 
         for(int i = 0; i < reaction.getLike().size(); i++){
-            if(!vote.getNegative().contains(reaction.getLike().get(i)) && !vote.getPositive().contains(reaction.getLike().get(i))){
-                satisfiedUsers.add(reaction.getLike().get(i));
+            Integer currentUser = reaction.getLike().get(i);
+            if(!vote.getNegative().contains(currentUser) && !vote.getPositive().contains(currentUser)){
+                satisfiedUsers.add(currentUser);
             }
         }
         return satisfiedUsers;
