@@ -35,7 +35,7 @@ public class ProposalController {
             case 2 -> greedy.maximizeTotalSatisfactionRatio(proposals, community).toArrayList();
             case 3 -> bruteForce.maximizeTotalSatisfaction(proposals, community).toArrayList();
             case 4 -> bruteForce.minimizeBudget(proposals, community).toArrayList();
-            case 5 -> greedy.minimizeBudget(proposals, community, new ArrayList<Integer>(), community.getNumberOfMembers()).toArrayList();
+            case 5 -> greedy.minimizeBudget(proposals, community, new ArrayList<Integer>()).toArrayList();
             default -> proposals;
         };
     }

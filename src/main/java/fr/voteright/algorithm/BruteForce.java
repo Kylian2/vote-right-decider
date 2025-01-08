@@ -63,7 +63,6 @@ public class BruteForce {
             System.out.println("ERROR -- BRUTE FORCE MAXIMISE TOTAL SATISFACTION -- TEST FAILED 0 EXPECTED, OBTAINED " + totalSatisfaction(maximiseTotalSatisfaction.toArrayList()));
         }
 
-        List<Proposal> minimizeBudget = bruteForce.minimizeBudget(proposals, community);
         try{
             bruteForce.minimizeBudget(new ArrayList<>(), community);
             System.out.println("ERROR -- BRUTE FORCE MINIMIZE BUDGET -- EXCEPTION EXPECTED BECAUSE OF EMPTY LIST");
@@ -247,7 +246,8 @@ public class BruteForce {
 
         // Mémoïsation pour éviter de recalculer les mêmes sous-problèmes
         Map<String, List<Proposal>> memoizationCache = new HashMap<>();
-        return minimizeBudgetWithMemoization(validProposals, community, memoizationCache);
+        ArrayList<Integer> satisfiedUsers = new ArrayList<>();
+        return minimizeBudgetWithMemoization(validProposals, community, memoizationCache, satisfiedUsers);
     }
 
     /**
@@ -261,9 +261,10 @@ public class BruteForce {
      * @param community Une instance de la communauté représentant l'état courant des budgets thématiques.
      * @param cache Une map de mémoïsation associant un état de la communauté et des propositions restantes
      *              à une solution optimisée.
+     * @param satisfiedUsers Un ArrayList contenant les identifiants des utilisateurs satisfaits
      * @return Une liste chaînée contenant les propositions sélectionnées pour cette branche de calcul.
      */
-    private List<Proposal> minimizeBudgetWithMemoization(ArrayList<Proposal> proposals, Community community, Map<String, List<Proposal>> cache) {
+    private List<Proposal> minimizeBudgetWithMemoization(ArrayList<Proposal> proposals, Community community, Map<String, List<Proposal>> cache, ArrayList<Integer> satisfiedUsers) {
         // Vérifier si une proposition semblable n'a pas déjà été trouvée
         String communityState = generateKey(community.getId(), proposals);
         if (cache.containsKey(communityState)) {
@@ -294,6 +295,20 @@ public class BruteForce {
 
         for (int i = 0; i < validProposals.size(); i++) {
             Proposal currentProposal = validProposals.get(i);
+            List<Proposal> currentSolution = new List<>(currentProposal);
+
+            // Créer une copie indépendante de la liste d'utilisateurs satisfaits pour éviter les problemes d'adressage
+            ArrayList<Integer> newSatisfiedUsers = new ArrayList<>(satisfiedUsers);
+
+            // Mettre à jour la liste d'utilisateurs satisfaits
+            for (Integer userId : currentProposal.getSatisfiedUsers()){
+                if(!newSatisfiedUsers.contains(userId)){
+                    newSatisfiedUsers.add(userId);
+                    if(newSatisfiedUsers.size() == community.getNumberOfMembers()){
+                        return currentSolution;
+                    }
+                }
+            }
 
             // Créer une copie indépendante de la communauté pour éviter les problemes d'adressage
             Community newCommunity = new Community(community);
@@ -304,8 +319,7 @@ public class BruteForce {
             ArrayList<Proposal> remainingProposals = new ArrayList<>(validProposals);
             remainingProposals.remove(i);
 
-            List<Proposal> currentSolution = new List<>(currentProposal);
-            currentSolution.setTail(minimizeBudgetWithMemoization(remainingProposals, newCommunity, cache));
+            currentSolution.setTail(minimizeBudgetWithMemoization(remainingProposals, newCommunity, cache, newSatisfiedUsers));
 
             if (everyUserHasAtLeastOneSatisfiedVote(currentSolution.toArrayList(), newCommunity.getNumberOfMembers()) && newCommunity.getUsedBudget() < minimumBudget) {
                 minimumBudget = newCommunity.getUsedBudget();
