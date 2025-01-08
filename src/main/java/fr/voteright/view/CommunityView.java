@@ -106,6 +106,8 @@ public class CommunityView extends View implements ParametrizedView{
         options.put("Rapide - Maximiser la satisfaction", 1);
         options.put("Rapide - Maximiser la satisfaction (ratio)", 2);
         options.put("Optimal - Maximiser la satisfaction", 3);
+        options.put("Optimal - Minimiser le budget", 4);
+        options.put("Rapide - Minimiser le budget", 5);
 
         Set<String> keys = options.keySet();
         String[] optionsArray = keys.toArray(new String[0]);
